@@ -8,6 +8,7 @@ use App\Models\Exam;
 use App\Models\ExamCertificate;
 use App\Models\HotExam;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 class ExamProviderController extends Controller

@@ -1,8 +1,8 @@
 <section class="py-12 bg-white overflow-hidden bg-cover">
     <div class="container px-4 mx-auto">
         <div class="md:max-w-4xl mb-8 md:mb-10">
-            <h1 class="mb-4 text-3xl md:text-4xl leading-tight font-bold tracking-tighter">Latest Recently Updated Exam
-                Questions</h1>
+            <h2 class="mb-4 text-3xl md:text-4xl leading-tight font-bold tracking-tighter">Latest Recently Updated Exam
+                Questions</h2>
             <p class="text-lg md:text-xl text-coolGray-500 font-medium">With our integrated CRM, project management,
                 collaboration and invoicing capabilities, you can manage every aspect of your business in one secure
                 platform.</p>
@@ -34,7 +34,7 @@
                                                                 src="https://dumpsarena.com/media/aba-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/aba/ctfa">ABA
@@ -46,7 +46,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/aba/ctfa">Certified Trust
                                                                         and Financial Advisor</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -68,7 +68,7 @@
                                                                 src="https://dumpsarena.com/media/acfe-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/acfe/cfe">ACFE
@@ -80,7 +80,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/acfe/cfe">Certified Fraud
                                                                         Examiner</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -102,7 +102,7 @@
                                                                 src="https://dumpsarena.com/media/aci-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/aci/3i0-012">ACI
@@ -114,7 +114,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/aci/3i0-012">ACI Dealing
                                                                         Certificate</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,7 +136,7 @@
                                                                 src="https://dumpsarena.com/media/alcatel-lucent-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/alcatel-lucent/4a0-100">Alcatel-Lucent
@@ -148,7 +148,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/alcatel-lucent/4a0-100">Nokia
                                                                         Scalable IP Networks</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,7 +170,7 @@
                                                                 src="https://dumpsarena.com/media/alcatel-lucent-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/alcatel-lucent/4a0-101">Alcatel-Lucent
@@ -183,7 +183,7 @@
                                                                         href="/exam-questions/alcatel-lucent/4a0-101">Alcatel-Lucent
                                                                         Interior Routing Protocols and High
                                                                         Availability</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -205,7 +205,7 @@
                                                                 src="https://dumpsarena.com/media/alcatel-lucent-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/alcatel-lucent/4a0-110">Alcatel-Lucent
@@ -217,7 +217,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/alcatel-lucent/4a0-110">Alcatel-Lucent
                                                                         Advanced Troubleshooting</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -239,7 +239,7 @@
                                                                 src="https://dumpsarena.com/media/android.png"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/android/and-402">Android
@@ -251,7 +251,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/android/and-402">Android
                                                                         Security Essentials</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -273,7 +273,7 @@
                                                                 src="https://dumpsarena.com/media/android.png"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/android/and-403">Android
@@ -285,7 +285,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/android/and-403">Monetize
                                                                         Android Applications</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -307,7 +307,7 @@
                                                                 src="https://dumpsarena.com/media/apbm-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/apbm/cbm">APBM
@@ -319,7 +319,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/apbm/cbm">Certified
                                                                         Business Manager</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -341,7 +341,7 @@
                                                                 src="https://dumpsarena.com/media/api-logo.gif"
                                                                 alt="" />
                                                             <div class="flex-shrink-1">
-                                                                <h4
+                                                                <h3
                                                                     class="font-heading text-wrap font-medium leading-4 text-blue-400 hover:text-blue-600">
                                                                     <a class="text-lg text-gray-600"
                                                                         href="/exam-questions/api/api-571">API
@@ -353,7 +353,7 @@
                                                                     <a class="text-sm"
                                                                         href="/exam-questions/api/api-571">Corrosion
                                                                         and Materials Professional</a>
-                                                                </h4>
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>

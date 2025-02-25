@@ -586,10 +586,10 @@
                                 <div class="w-auto">
                                     <div class="flex flex-wrap -mx-3 -mb-1 -mt-4">
                                         <div class="w-auto p-2">
-                                            <h2 class="text-base font-bold text-gray-500">
+                                            <div class="text-base font-bold text-gray-500">
                                                 <a class="text-green-500 hover:text-green-600 hover:underline font-bold underline-offset-2"
                                                     href="/login">Login Now</a>
-                                            </h2>
+                                            </div>
                                             <p class="text-sm font-medium text-gray-500">Do not have an account?
                                                 <!-- -->
                                                 <a class="text-green-500 hover:text-green-600 hover:underline font-bold underline-offset-2"
