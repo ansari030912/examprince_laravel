@@ -11,6 +11,6 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/exam-providers', [ExamProviderController::class, 'index']);
 Route::get('/exam-provider/{vendorPerma}', [ExamProviderController::class, 'getExamsByVendorPerma']);
 Route::get('/vendor-exam-questions/{vendor_perma}/{cert_perma}', [SingleCertificationsExamsController::class, 'getSingleCertificationExams']);
+Route::get('/test-engine-simulator', [HomeController::class, 'getBannerForTestEngine']);
 
 // 404
-Route::get('/some-route', 'SomeController@method')->middleware('redirect.if.not.found');

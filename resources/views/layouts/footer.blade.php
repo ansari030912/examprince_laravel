@@ -1,5 +1,5 @@
 <footer>
-    <section class="bg-white overflow-hidden ">
+    <section class="bg-white overflow-hidden border-t border-gray-200">
         <div class="container px-1 mx-auto">
             <div class="flex flex-wrap lg:items-center pt-12 pb-12 px-2 md:px-0 -mx-4">
                 <div class="w-full md:w-3/4 px-4">

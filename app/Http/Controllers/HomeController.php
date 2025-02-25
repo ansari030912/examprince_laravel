@@ -29,6 +29,25 @@ class HomeController extends Controller
 
         return view('welcome', compact('vendors', 'weeklyExams', 'monthlyExams', 'banner', 'certifications'));
     }
+    public function getBannerForTestEngine()
+    {
+        // Fetching vendors from the database
+        $vendors = DB::table('vendors')
+            ->select('vendor_id', 'vendor_title', 'vendor_perma', 'vendor_img', 'vendor_exams')
+            ->get();
+
+        // Fetching hot exams
+        $weeklyExams = HotExam::where('type', 'week')->get();
+        $monthlyExams = HotExam::where('type', 'month')->get();
+
+        // Fetch the latest banner
+        $banner = Banner::latest()->first();
+
+        // Static certifications array
+        $certifications = $this->getCertifications();
+
+        return view('test_engine_simulator', compact('vendors', 'weeklyExams', 'monthlyExams', 'banner', 'certifications'));
+    }
 
     /**
      * Returns a static array of certifications.

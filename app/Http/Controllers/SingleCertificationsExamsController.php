@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\HotExam;
 use Illuminate\Http\Request;
 use App\Models\SingleCertificate;
 use App\Models\CertificateMultipleExam;
@@ -17,7 +18,7 @@ class SingleCertificationsExamsController extends Controller
 
         // Debugging: Check if certification is found
         if (!$certification) {
-            abort(404);
+            return redirect('/');
         }
 
         $banner = Banner::latest()->first();
@@ -30,11 +31,16 @@ class SingleCertificationsExamsController extends Controller
             return response()->json(['message' => 'No related exams found', 'cert_id' => $certification->cert_id]);
         }
 
+        $weeklyExams = HotExam::where('type', 'week')->get();
+        $monthlyExams = HotExam::where('type', 'month')->get();
+
         // Return data to the view
         return view('single_certificate_exams', [
             'certification' => $certification,
             'relatedExams' => $relatedExams,
-            'banner' => $banner
+            'banner' => $banner,
+            'weeklyExams' => $weeklyExams,
+            'monthlyExams' => $monthlyExams,
         ]);
     }
 }

@@ -52,15 +52,16 @@
                             </a> --}}
                             @if ($relatedExams->isNotEmpty())
                                 {{-- <p class="text-xl text-blue-500 font-semibold"> --}}
-                                    <a href="/exam-provider/{{ $relatedExams->first()->exam_vendor_perma }}"
-                                        class="text-xl text-blue-500 hover:underline">
-                                        {{ $relatedExams->first()->exam_vendor_title }}
-                                    </a>
+                                <a href="/exam-provider/{{ $relatedExams->first()->exam_vendor_perma }}"
+                                    class="text-xl text-blue-500 hover:underline">
+                                    {{ $relatedExams->first()->exam_vendor_title }}
+                                </a>
                                 {{-- </p> --}}
                             @endif
                         </p>
                         <p class="text-gray-500 text-base font-semibold mb-6 max-w-xl">
-                            Certification Exam Name: <span class="text-sky-500 text-xl">{{ $certification->cert_full_name }}</span>
+                            Certification Exam Name: <span
+                                class="text-sky-500 text-xl">{{ $certification->cert_full_name }}</span>
                         </p>
 
                         <!-- Rating Stars -->
@@ -188,6 +189,11 @@
             </div>
         </div>
     </section>
+    @include('components.logo-banner')
+    @include('components.hot-exam', [
+        'weeklyExams' => $weeklyExams,
+        'monthlyExams' => $monthlyExams,
+    ])
 
     <script>
         // Countdown Timer

@@ -86,7 +86,7 @@
             </div>
 
             <!-- Hot Exams Section (Initially Hidden) -->
-            <div id="hotExamsSection">
+            <div id="hotExamsSection"  class="hidden">
                 @include('components.hot-exam', [
                     'weeklyExams' => $weeklyExams,
                     'monthlyExams' => $monthlyExams,
