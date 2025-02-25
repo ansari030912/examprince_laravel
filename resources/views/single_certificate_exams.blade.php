@@ -1,4 +1,20 @@
 @extends('layouts.app')
+@php
+    // Use the $certification variable passed from the controller.
+    $shouldIndex = isset($certification) && $certification->cert_title !== null;
+    $metaTitle = $shouldIndex
+        ? "Updated {$certification->cert_title} Exam Questions and Answers by Tech Professionals"
+        : 'Updated Exam Questions and Answers by Tech Professionals';
+    $metaDescription = $shouldIndex
+        ? "Examprince is a premium provider of Real and Valid Exam Questions and Answers of {$certification->cert_title} IT certification Exams. Pass your certification exam easily with PDF and test engine dumps in 2025 and become a certified professional."
+        : 'Examprince is a premium provider of Real and Valid Exam Questions and Answers of IT certification Exams. Pass your certification exam easily with PDF and test engine dumps in 2025.';
+@endphp
+
+@section('meta_title', $metaTitle)
+@section('meta_description', $metaDescription)
+@section('meta_robots', $shouldIndex ? 'index, follow' : 'noindex, nofollow')
+@section('meta_canonical', url()->current()) {{-- or hardcode 'https://examprince.com' if needed --}}
+
 
 @section('main-content')
     @if (!is_null($banner))

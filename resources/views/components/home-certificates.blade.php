@@ -8,8 +8,8 @@
                         <a
                             href="{{ url('vendor-exam-questions/' . $certification['vendorPerma'] . '/' . $certification['perma']) }}">
                             <div class="p-4 pb-6">
-                                <h2 class="text-gray-800 font-bold text-xl text-center">{{ $certification['vendor'] }}
-                                </h2>
+                                <h3 class="text-gray-800 font-bold text-xl text-center">{{ $certification['vendor'] }}
+                                </h3>
                                 <div class="text-gray-500 font-semibold text-sm text-center">
                                     {{ $certification['name'] }}
                                 </div>

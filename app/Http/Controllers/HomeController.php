@@ -27,7 +27,20 @@ class HomeController extends Controller
         // Static certifications array
         $certifications = $this->getCertifications();
 
-        return view('welcome', compact('vendors', 'weeklyExams', 'monthlyExams', 'banner', 'certifications'));
+        $recentlyUpdatedExams = DB::table('recently_updated')
+            ->orderBy('exam_update_date', 'desc') // Sorting by update date
+            ->get();
+
+        return view('welcome', compact('vendors', 'weeklyExams', 'monthlyExams', 'banner', 'certifications', 'recentlyUpdatedExams'));
+    }
+    public function getUnlimitedAccess()
+    {
+        $vendors = DB::table('vendors')
+            ->select('vendor_id', 'vendor_title', 'vendor_perma', 'vendor_img', 'vendor_exams')
+            ->get();
+        $banner = Banner::latest()->first();
+        // Return the unlimited access view and pass the vendors data
+        return view('unlimited-access', compact('vendors', 'banner'));
     }
     public function getBannerForTestEngine()
     {

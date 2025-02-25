@@ -5,7 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>@yield('meta_title', 'ExamPrince - Your Exam Guide')</title>
+
+    <meta name="description" content="@yield('meta_title', 'Examprince provides real and valid IT certification exam questions.')">
+    <meta name="robots" content="@yield('meta_robots', 'index, follow')">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="@yield('meta_canonical', url()->current())">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

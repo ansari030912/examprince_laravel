@@ -12,5 +12,6 @@ Route::get('/exam-providers', [ExamProviderController::class, 'index']);
 Route::get('/exam-provider/{vendorPerma}', [ExamProviderController::class, 'getExamsByVendorPerma']);
 Route::get('/vendor-exam-questions/{vendor_perma}/{cert_perma}', [SingleCertificationsExamsController::class, 'getSingleCertificationExams']);
 Route::get('/test-engine-simulator', [HomeController::class, 'getBannerForTestEngine']);
+Route::get('/unlimited-access', [HomeController::class, 'getUnlimitedAccess']);
 
 // 404
