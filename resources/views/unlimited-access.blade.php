@@ -16,7 +16,7 @@
                 </a>
             </div>
         @endif
-        <section class="py-12">
+        <section class="pb-12 pt-4">
             <div class="container px-4 mx-auto">
                 <div class="max-w-md lg:max-w-6xl mx-auto">
                     <div class="flex flex-wrap items-end -mx-4 mb-6">
