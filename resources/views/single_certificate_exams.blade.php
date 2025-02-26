@@ -166,7 +166,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($relatedExams as $exam)
                             <div class="flex flex-col items-center">
-                                <a href="{{ url('/exam/' . $exam->exam_perma) }}" class="group hover:text-blue-500">
+                                <a href="{{ url('/exam-questions/' . $relatedExams->first()->exam_vendor_perma . '/' . $exam->exam_perma) }}"
+                                    class="group hover:text-blue-500">
                                     <div class="flex justify-center">
                                         <div class="relative overflow-hidden rounded-xl mb-6"
                                             style="height: 270px; width: 300px;">
