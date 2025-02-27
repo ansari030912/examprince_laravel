@@ -4,14 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\HotExam;
+use App\Models\RecentlyUpdated;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+
     public function index()
     {
+        $searchOpen = false;
+        $searchValue = '';
+        $isNavVisible = false;
+        $isOpen = false;
+        $showVendors = false;
+
+        // Get your other data for the view
+        $vendors = Vendor::select('vendor_id', 'vendor_title', 'vendor_perma', 'vendor_img', 'vendor_exams')->get();
+        $weeklyHotExams = HotExam::where('type', 'week')->get();
+        $monthlyHotExams = HotExam::where('type', 'month')->get();
+        $banner = Banner::latest()->first();
+
+        // Get login response and cart data from session or initialize them
+        $loginResponse = session('loginResponse', (object) ['is_logged_in' => false]);
+        $cartResponse = session('cartResponse', []);
+
         // Fetching vendors from the database
         $vendors = DB::table('vendors')
             ->select('vendor_id', 'vendor_title', 'vendor_perma', 'vendor_img', 'vendor_exams')
@@ -31,7 +50,19 @@ class HomeController extends Controller
             ->orderBy('exam_update_date', 'desc') // Sorting by update date
             ->get();
 
-        return view('welcome', compact('vendors', 'weeklyExams', 'monthlyExams', 'banner', 'certifications', 'recentlyUpdatedExams'));
+        return view('welcome', compact(
+            'vendors',
+            'weeklyExams',
+            'certifications',
+            'monthlyExams',
+            'banner',
+            'searchOpen',
+            'searchValue',
+            'recentlyUpdatedExams',
+            // 'isNavVisible',
+            // 'isOpen',
+            // 'showVendors',
+        ));
     }
     public function getUnlimitedAccess()
     {
