@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NavControler;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SingleCertificationsExamsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamProviderController;
@@ -33,7 +34,7 @@ Route::get('/test-engine-simulator', [HomeController::class, 'getBannerForTestEn
 Route::get('/unlimited-access', [HomeController::class, 'getUnlimitedAccess']);
 
 Route::get('/exam-questions/{vendor_perma}/{exam_perma}', [ExamsPageController::class, 'show']);
-
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 // 404
 // get login user
 // Route::get('/get-login-response', [NavControler::class, 'getLoginResponse']);
