@@ -61,7 +61,7 @@
                             @if(isset($examDetails['examCerts']) && is_array($examDetails['examCerts']) && !empty($examDetails['examCerts']))
                                 @foreach ($examDetails['examCerts'] as $index => $certification)
                                     <a class="hover:underline text-sky-500"
-                                       href="/vendor-exam-questions/microsoft/{{ $certification['cert_perma'] }}">
+                                       href="/vendor-exam-questions/{{ $examDetails['exam']->vendor_perma }}/{{ $certification['cert_perma'] }}">
                                         {{ $certification['cert_title'] }}@if ($index < count($examDetails['examCerts']) - 1), @endif
                                     </a>
                                 @endforeach

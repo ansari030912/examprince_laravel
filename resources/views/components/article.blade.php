@@ -86,7 +86,7 @@
                             <p
                                 class="mb-4 text-lg md:text-xl leading-tight font-medium text-blue-500 hover:text-blue-600">
                                 <a
-                                    href="{{ url('vendor-exam-questions/' . $examDetails['exam']->exam_vendor_perma . '/' . $cert->cert_perma) }}">
+                                    href="{{ url('vendor-exam-questions/' . $examDetails['exam']->vendor_perma . '/' . $cert->cert_perma) }}">
                                     {{ $cert->cert_name }}
                                     <br />
                                 </a>
@@ -119,7 +119,7 @@
                             <span key={index}
                                 class="mb-4 text-lg md:text-xl leading-tight font-medium text-blue-500 hover:text-blue-600">
                                 <a
-                                    href="{{ url('vendor-exam-questions/' . $examDetails['exam']->exam_vendor_perma . '/' . $cert->cert_perma) }}">
+                                    href="{{ url('vendor-exam-questions/' . $examDetails['exam']->vendor_perma . '/' . $cert->cert_perma) }}">
                                     {{ $cert->cert_name }},
                                 </a>
                             </span>

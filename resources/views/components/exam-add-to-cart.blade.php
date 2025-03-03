@@ -30,7 +30,7 @@
                         <div class="transition duration-300 ease-in-out transform hover:scale-105 MuiBox-root css-1npz1le product-item"
                             data-product-id="{{ $product->id }}">
                             <div class="MuiCardContent-root mb-4 css-1qw96cp">
-                                @if ($product->off == 70)
+                                @if ($product->off >= 70)
                                     <p class="MuiTypography-root MuiTypography-body1 css-213zkn">
                                         <span>MOST POPULAR</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
@@ -48,13 +48,15 @@
                                             class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ml0too">
                                             <b class="text-blue-600">{{ $product->title }}</b>
                                         </div>
-                                        <p style="margin-bottom:20px;">
+                                        <p style="margin-bottom:20px;" class="text-gray-500">
                                             @if ($product->title === 'Full Premium Bundle')
                                                 PDF, Test Engine & Training Course Bundle
                                             @elseif($product->title === 'PDF & Test Engine Bundle')
                                                 Printable PDF & Test Engine Bundle
-                                            @elseif($product->title === 'Training Course Only')
-                                                282 Lectures (23 Hours)
+                                            @elseif ($product->title === 'Training Course Only')
+                                                {{ $examDetails['exam']->exam_training_course['lectures'] ?? 'N/A' }}
+                                                Lectures
+                                                ({{ $examDetails['exam']->exam_training_course['duration'] ?? 'N/A' }})
                                             @elseif($product->title === 'Test Engine Only')
                                                 Test Engine File for 3 devices
                                             @elseif($product->title === 'PDF Only')
@@ -83,23 +85,59 @@
 
         <div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 css-1ak9ift">
             <div class="hidden lg:inline-block">
-                <p class="text-xl mb-4 font-bold text-blue-600">Microsoft</p>
+                <p class="text-xl mb-4 font-bold text-blue-600"> {{ $examDetails['exam']->vendor_title }}</p>
                 <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-o941x8">
                     <!-- Microsoft section content -->
                 </div>
             </div>
             <hr style="border:1px solid #F5F6FA">
-            <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root hidden lg:inline-block w-full css-xa7vfk">
-                <p class="MuiTypography-root MuiTypography-body1 css-wesure">
-                    <span style="color:#856404">Limited Time Mega Sale!</span>
-                    <br>
-                    <span style="color:#DC3545">(40-70% OFF)</span>
-                </p>
-                <p class="MuiTypography-root MuiTypography-body1 css-glm6n4">
-                    Hurry up! offer ends in <span class="text-red-500" id="countdown">16h 0m 0s</span>
-                </p>
-            </div>
+
+            {{-- IF the exam is retired --}}
+            @if ($examDetails['exam']->exam_retired)
+                <div id="promoBanner"
+                    style="background-color: #F8D7DA;
+                   border: 1px solid red;
+                   padding: 10px;
+                   margin: 10px 0;
+                   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);">
+
+                    <p style="font-size: 18px; font-weight: 600; color: red;">
+                        <span class="text-gray-600" style="font-size: 22px;">
+                            Note :
+                        </span>
+                        {{ $examDetails['exam']->exam_code }} ({{ $examDetails['exam']->exam_title }}) will not
+                        receive any new updates.
+                    </p>
+
+                    @if (!empty($examDetails['exam']->exam_alternate['exam_alternate_code']))
+                        <p class="text-gray-600" style="font-size: 16px; font-weight: 600; text-align: right;">
+                            New exam code:
+                            <a href="/exam-questions/{{ $examDetails['exam']->vendor_perma }}/{{ $examDetails['exam']->exam_alternate['exam_alternate_perma'] }}"
+                                class="hover:text-blue-700 text-blue-600 hover:underline">
+                                {{ $examDetails['exam']->exam_alternate['exam_alternate_code'] }}
+                            </a>
+                        </p>
+                    @endif
+                </div>
+            @else
+                {{-- Not retired => show normal Mega Sale box --}}
+                <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root hidden lg:inline-block w-full css-xa7vfk"
+                    id="promoBanner">
+                    <p class="MuiTypography-root MuiTypography-body1 css-wesure">
+                        <span style="color:#856404">Limited Time Mega Sale!</span>
+                        <br>
+                        <span style="color:#DC3545">(40-70% OFF)</span>
+                    </p>
+                    <p class="MuiTypography-root MuiTypography-body1 css-glm6n4">
+                        Hurry up! Offer ends in
+                        <span class="text-red-500" id="countdown">16h 0m 0s</span>
+                    </p>
+                    <button id="closeButton" class="text-blue-800 font-bold text-sm mt-2 hover:text-blue-500">
+                        Hide
+                    </button>
+                </div>
+            @endif
+
             <hr style="border:1px solid #F5F6FA;margin-bottom:20px">
             <div>
                 <!-- Order summary section -->
@@ -109,7 +147,8 @@
                     <span style="position:relative;display:inline-block;color:red" class="text-xl">
                         $<span id="actualAmount">0</span>
                         <span
-                            style="position:absolute;height:2px;width:100%;background-color:red;top:60%;left:0;transform:rotate(-5deg);transform-origin:left center"></span>
+                            style="position:absolute;height:2px;width:100%;background-color:red;top:60%;left:0;transform:rotate(-5deg);transform-origin:left center">
+                        </span>
                     </span>
                 </span>
                 <hr style="border:1px solid #F5F6FA">
@@ -142,53 +181,42 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const products = @json($examDetails['examPrices']);
-        let selectedProduct = products[0];
+        let selectedProduct = products.length > 0 ? products[0] : null;
         const productItems = document.querySelectorAll('.product-item');
         const actualAmountEl = document.getElementById('actualAmount');
         const discountPercentageEl = document.getElementById('discountPercentage');
         const totalAmountEl = document.getElementById('totalAmount');
         const addToCartBtn = document.getElementById('addToCartBtn');
 
+        // 1) Product selection logic
         function updateOrderSummary() {
             if (!selectedProduct) return;
 
-            // Convert string values to numbers before using toFixed
             const fullPrice = parseFloat(selectedProduct.full_price);
             const price = parseFloat(selectedProduct.price);
+            // "off" from server is total discount % (e.g. 70)
+            const offPercent = selectedProduct.off;
 
-            // Update the summary section with selected product details
             actualAmountEl.textContent = fullPrice.toFixed(2);
-
-            // Calculate discount percentage
-            const discountPercentage = ((fullPrice - price) / fullPrice * 100).toFixed(0);
-            discountPercentageEl.textContent = discountPercentage;
-
-            // Update total amount
+            discountPercentageEl.textContent = offPercent;
             totalAmountEl.textContent = price.toFixed(2);
         }
 
         function selectProduct(productId) {
-            // Remove selection from all products first
             productItems.forEach(item => {
-                item.classList.remove('ring-2', 'ring-red-400', 'shadow-xl');
-                item.classList.remove('bg-gray-50');
+                item.classList.remove('ring-2', 'ring-red-400', 'shadow-xl', 'bg-gray-50');
             });
 
-            // Find and select the new product
             selectedProduct = products.find(p => p.id === productId);
-
-            // Add selection styling to the clicked product
             const selectedItem = document.querySelector(`[data-product-id="${productId}"]`);
+
             if (selectedItem) {
-                selectedItem.classList.add('ring-2', 'ring-red-400', 'shadow-xl');
-                selectedItem.classList.add('bg-gray-50');
+                selectedItem.classList.add('ring-2', 'ring-red-400', 'shadow-xl', 'bg-gray-50');
             }
 
-            // Update the summary
             updateOrderSummary();
         }
 
-        // Add click event listeners to all product items
         productItems.forEach(item => {
             item.addEventListener('click', () => {
                 const productId = parseInt(item.dataset.productId);
@@ -196,7 +224,10 @@
             });
         });
 
-        // Add to cart functionality
+        if (selectedProduct) {
+            selectProduct(selectedProduct.id);
+        }
+
         addToCartBtn.addEventListener('click', () => {
             if (selectedProduct) {
                 localStorage.setItem('cartItem', JSON.stringify(selectedProduct));
@@ -204,13 +235,56 @@
             }
         });
 
-        // Initialize with the first product selected
-        if (products.length > 0) {
-            selectProduct(products[0].id);
+        // 2) Countdown logic (only if exam isn't retired)
+        const isRetired = @json($examDetails['exam']->exam_retired);
+        if (!isRetired) {
+            const countdownEl = document.getElementById('countdown');
+            if (countdownEl) {
+                const countdownKey = 'megaSaleCountdownTarget';
+
+                function updateCountdown() {
+                    let targetTime = localStorage.getItem(countdownKey);
+
+                    // If no target time stored, set one for 16 hours from now
+                    if (!targetTime) {
+                        targetTime = new Date().getTime() + (16 * 60 * 60 * 1000); // 16 hours
+                        localStorage.setItem(countdownKey, targetTime);
+                    } else {
+                        targetTime = parseInt(targetTime);
+                    }
+
+                    const now = new Date().getTime();
+                    let diff = targetTime - now;
+
+                    // If time's up, reset to next 16 hours
+                    if (diff <= 0) {
+                        targetTime = now + (16 * 60 * 60 * 1000);
+                        localStorage.setItem(countdownKey, targetTime);
+                        diff = targetTime - now;
+                    }
+
+                    const hours = Math.floor(diff / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
+                }
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
         }
 
-        // Countdown timer functionality remains the same
-
-
+        // 3) "Close" button logic (both in retired or normal banner)
+        //    We have same id="closeButton" in both banners
+        const closeButton = document.getElementById('closeButton');
+        if (closeButton) {
+            closeButton.addEventListener('click', function() {
+                const banner = document.getElementById('promoBanner');
+                if (banner) {
+                    banner.style.display = 'none';
+                }
+            });
+        }
     });
 </script>

@@ -30,4 +30,8 @@
         @include('components.article')
 
     </section>
+    <script>
+        // We'll convert $examDetails to JSON and log it
+        console.log(@json($examDetails));
+    </script>
 @endsection

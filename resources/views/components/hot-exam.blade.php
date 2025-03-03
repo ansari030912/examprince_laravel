@@ -28,7 +28,7 @@
 
         <div id="exam-container" class="flex flex-wrap justify-center lg:justify-start">
             @foreach ($weeklyExams->take(10) as $exam)
-                <div class="exam-card week w-full sm:w-1/2 md:w-1/4 lg:w-1/5 p-2 hidden">
+                <div class="exam-card week w-full sm:w-1/2 md:w-1/3 lg:w-1/4 2xl:w-1/5 p-2 hidden">
                     <div class="bg-white p-4 shadow-lg rounded-xl min-h-[310px] flex flex-col">
                         <div class="flex-grow">
                             <p class="text-base flex justify-between text-gray-800 font-bold mb-2">
@@ -53,7 +53,7 @@
             @endforeach
 
             @foreach ($monthlyExams->take(10) as $exam)
-                <div class="exam-card month w-full sm:w-1/2 md:w-1/4 lg:w-1/5 p-2">
+                <div class="exam-card month w-full sm:w-1/2 md:w-1/3 lg:w-1/4 2xl:w-1/5 p-2">
                     <div class="bg-white p-4 shadow-lg rounded-xl min-h-[310px] flex flex-col">
                         <div class="flex-grow">
                             <p class="text-base flex justify-between text-gray-800 font-bold mb-2">
