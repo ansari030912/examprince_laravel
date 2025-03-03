@@ -130,11 +130,8 @@
                     </p>
                     <p class="MuiTypography-root MuiTypography-body1 css-glm6n4">
                         Hurry up! Offer ends in
-                        <span class="text-red-500" id="countdown">16h 0m 0s</span>
+                        @include('components.time')
                     </p>
-                    <button id="closeButton" class="text-blue-800 font-bold text-sm mt-2 hover:text-blue-500">
-                        Hide
-                    </button>
                 </div>
             @endif
 
@@ -164,7 +161,7 @@
                 </span>
                 <hr style="border:1px solid #F5F6FA;margin-bottom:12px">
                 <button id="addToCartBtn"
-                    class="bg-green-600 rounded-full hover:bg-green-700 text-white font-semibold h-10 w-full px-7 py-4 flex items-center justify-center gap-2 transition duration-200">
+                    class="bg-green-600 cursor-pointer rounded-full hover:bg-green-700 text-white font-semibold h-10 w-full px-7 py-4 flex items-center justify-center gap-2 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
                         fill="none">
                         <!-- SVG path data -->
@@ -181,24 +178,22 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const products = @json($examDetails['examPrices']);
-        let selectedProduct = products.length > 0 ? products[0] : null;
+        const examDetails = @json($examDetails['exam']); // Get exam details
+        let selectedProduct = products[0];
         const productItems = document.querySelectorAll('.product-item');
         const actualAmountEl = document.getElementById('actualAmount');
         const discountPercentageEl = document.getElementById('discountPercentage');
         const totalAmountEl = document.getElementById('totalAmount');
         const addToCartBtn = document.getElementById('addToCartBtn');
 
-        // 1) Product selection logic
         function updateOrderSummary() {
             if (!selectedProduct) return;
 
             const fullPrice = parseFloat(selectedProduct.full_price);
             const price = parseFloat(selectedProduct.price);
-            // "off" from server is total discount % (e.g. 70)
-            const offPercent = selectedProduct.off;
 
             actualAmountEl.textContent = fullPrice.toFixed(2);
-            discountPercentageEl.textContent = offPercent;
+            discountPercentageEl.textContent = selectedProduct.off;
             totalAmountEl.textContent = price.toFixed(2);
         }
 
@@ -208,13 +203,17 @@
             });
 
             selectedProduct = products.find(p => p.id === productId);
-            const selectedItem = document.querySelector(`[data-product-id="${productId}"]`);
 
+            const selectedItem = document.querySelector(`[data-product-id="${productId}"]`);
             if (selectedItem) {
                 selectedItem.classList.add('ring-2', 'ring-red-400', 'shadow-xl', 'bg-gray-50');
             }
 
             updateOrderSummary();
+        }
+
+        if (products.length > 0) {
+            selectProduct(products[0].id);
         }
 
         productItems.forEach(item => {
@@ -224,39 +223,90 @@
             });
         });
 
-        if (selectedProduct) {
-            selectProduct(selectedProduct.id);
+        function showSnackbar(message, isError = false) {
+            let snackbar = document.createElement('div');
+            snackbar.textContent = message;
+            snackbar.classList.add(
+                'fixed', 'bottom-5', 'right-5', 'px-6', 'py-3', 'rounded-lg', 'shadow-lg', 'text-white', 'text-lg', 'font-semibold',
+                'transition-all', 'duration-300', 'ease-in-out', 'z-50'
+            );
+
+            if (isError) {
+                snackbar.classList.add('bg-red-600');
+            } else {
+                snackbar.classList.add('bg-green-600');
+            }
+
+            document.body.appendChild(snackbar);
+
+            setTimeout(() => {
+                snackbar.classList.add('opacity-0');
+                setTimeout(() => {
+                    snackbar.remove();
+                }, 300);
+            }, 3000);
         }
 
         addToCartBtn.addEventListener('click', () => {
-            if (selectedProduct) {
-                localStorage.setItem('cartItem', JSON.stringify(selectedProduct));
-                alert('Product added to cart!');
-            }
-        });
+            if (!selectedProduct) return;
 
-        // 2) Countdown logic (only if exam isn't retired)
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Check if the product is already in the cart
+            const productExists = cart.some(item => item.id === selectedProduct.id);
+
+            if (productExists) {
+                showSnackbar(`❌ "${selectedProduct.title}" is already in your cart!`, true);
+                return;
+            }
+
+            // Save the full product object including exam & vendor details
+            const cartItem = {
+                id: selectedProduct.id,
+                title: selectedProduct.title,
+                full_price: selectedProduct.full_price,
+                price: selectedProduct.price,
+                off: selectedProduct.off,
+                cart: selectedProduct.cart,
+                vendor_perma: examDetails.vendor_perma,
+                vendor_title: examDetails.vendor_title,
+                exam_code: examDetails.exam_code,
+                exam_title: examDetails.exam_title
+            };
+
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            showSnackbar(`✅ "${selectedProduct.title}" added to cart!`);
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Only run countdown if exam isn't retired.
         const isRetired = @json($examDetails['exam']->exam_retired);
         if (!isRetired) {
-            const countdownEl = document.getElementById('countdown');
+            // Get the countdown element by the new id "saleCountdown"
+            const countdownEl = document.getElementById('saleCountdown');
             if (countdownEl) {
                 const countdownKey = 'megaSaleCountdownTarget';
 
                 function updateCountdown() {
-                    let targetTime = localStorage.getItem(countdownKey);
+                    // Retrieve target time and convert to a number
+                    let targetTime = Number(localStorage.getItem(countdownKey));
+                    const now = Date.now();
 
-                    // If no target time stored, set one for 16 hours from now
-                    if (!targetTime) {
-                        targetTime = new Date().getTime() + (16 * 60 * 60 * 1000); // 16 hours
+                    // If no valid target time stored, set one for 16 hours from now.
+                    if (!targetTime || isNaN(targetTime)) {
+                        targetTime = now + (16 * 60 * 60 * 1000);
                         localStorage.setItem(countdownKey, targetTime);
-                    } else {
-                        targetTime = parseInt(targetTime);
                     }
 
-                    const now = new Date().getTime();
                     let diff = targetTime - now;
 
-                    // If time's up, reset to next 16 hours
+                    // If the countdown has expired, reset for the next 16 hours.
                     if (diff <= 0) {
                         targetTime = now + (16 * 60 * 60 * 1000);
                         localStorage.setItem(countdownKey, targetTime);
@@ -270,21 +320,10 @@
                     countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
                 }
 
+                // Run the update immediately and then every second.
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
             }
-        }
-
-        // 3) "Close" button logic (both in retired or normal banner)
-        //    We have same id="closeButton" in both banners
-        const closeButton = document.getElementById('closeButton');
-        if (closeButton) {
-            closeButton.addEventListener('click', function() {
-                const banner = document.getElementById('promoBanner');
-                if (banner) {
-                    banner.style.display = 'none';
-                }
-            });
         }
     });
 </script>

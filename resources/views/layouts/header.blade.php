@@ -127,7 +127,7 @@
 
                         <div class="w-auto p-3">
                             @if (!optional($loginResponse)->is_logged_in)
-                                <a href="{{ url('login') }}">
+                                <a href="{{ url('/set-login-cookie') }}">
                                     <b style="padding: 10px;"
                                         class="hover:text-white hover:border-gray-700 border-gray-700 border-2 text-gray-700 hover:bg-gray-700">
                                         Log In
@@ -608,7 +608,7 @@
                                     <div class="flex flex-wrap -mx-3 -mb-1 -mt-4">
                                         <div class="w-auto p-2">
                                             <h2 class="text-base font-bold text-gray-500">
-                                                <a href={{ url('/') }}
+                                                <a href={{ url('/set-login-cookie') }}
                                                     class="text-green-500 hover:text-green-600 hover:underline font-bold underline-offset-2"
                                                     onclick="closeNav()">
                                                     Login Now
@@ -650,6 +650,13 @@
         </div>
     </div>
 </section>
+<script>
+    function handleSignOut() {
+        // Redirect to the logout endpoint in Laravel
+        window.location.href = "/logout";
+    }
+</script>
+
 
 <script>
     // 1) Grab references to the two inputs
@@ -854,12 +861,6 @@
             if (mobileNav) {
                 mobileNav.classList.add('hidden');
             }
-        }
-
-        // Handle sign out
-        window.handleSignOut = function() {
-            localStorage.removeItem("loginResponse");
-            window.location.href = '/login';
         }
 
         // Add click outside listener to close dropdown

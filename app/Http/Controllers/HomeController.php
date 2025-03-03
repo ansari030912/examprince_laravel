@@ -23,18 +23,6 @@ class HomeController extends Controller
 
         // Get your other data for the view
         $vendors = Vendor::select('vendor_id', 'vendor_title', 'vendor_perma', 'vendor_img', 'vendor_exams')->get();
-        $weeklyHotExams = HotExam::where('type', 'week')->get();
-        $monthlyHotExams = HotExam::where('type', 'month')->get();
-        $banner = Banner::latest()->first();
-
-        // Get login response and cart data from session or initialize them
-        $loginResponse = session('loginResponse', (object) ['is_logged_in' => false]);
-        $cartResponse = session('cartResponse', []);
-
-        // Fetching vendors from the database
-        $vendors = DB::table('vendors')
-            ->select('vendor_id', 'vendor_title', 'vendor_perma', 'vendor_img', 'vendor_exams')
-            ->get();
 
         // Fetching hot exams
         $weeklyExams = HotExam::where('type', 'week')->get();

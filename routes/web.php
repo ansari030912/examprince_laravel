@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NavControler;
 use App\Http\Controllers\SearchController;
@@ -38,3 +39,4 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 // 404
 // get login user
 // Route::get('/get-login-response', [NavControler::class, 'getLoginResponse']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
