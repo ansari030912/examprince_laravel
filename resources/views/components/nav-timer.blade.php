@@ -28,3 +28,18 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const closeButton = document.getElementById("closeButton");
+        const promoBanner = document.getElementById("promoBanner");
+
+        closeButton.addEventListener("click", function() {
+            promoBanner.style.transition = "opacity 0.3s ease-out";
+            promoBanner.style.opacity = "0";
+
+            setTimeout(() => {
+                promoBanner.style.display = "none";
+            }, 300);
+        });
+    });
+</script>

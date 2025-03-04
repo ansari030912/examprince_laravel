@@ -81,6 +81,31 @@ class HomeController extends Controller
         return view('test_engine_simulator', compact('vendors', 'weeklyExams', 'monthlyExams', 'banner', 'certifications'));
     }
 
+    public function getFaq()
+    {
+        $banner = Banner::latest()->first();
+        return view('faq', compact('banner'));
+    }
+    public function getAbout()
+    {
+        $banner = Banner::latest()->first();
+        return view('about', compact('banner'));
+    }
+    public function getRefund()
+    {
+        $banner = Banner::latest()->first();
+        return view('refund_policy', compact('banner'));
+    }
+    public function getPrivacy()
+    {
+        $banner = Banner::latest()->first();
+        return view('privacy_policy', compact('banner'));
+    }
+    public function getTermaCondition()
+    {
+        $banner = Banner::latest()->first();
+        return view('terms_and_conditions', compact('banner'));
+    }
     /**
      * Returns a static array of certifications.
      *
