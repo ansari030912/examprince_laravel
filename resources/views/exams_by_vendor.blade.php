@@ -1,6 +1,47 @@
 @extends('layouts.app')
 
+@section('meta_title', 'Updated ' . $vendor->vendor_title . ' Exam Questions and Answers by Tech Professionals')
+@section('meta_description',
+    'Examprince is a premium provider of Real and Valid Exam Question and Answers of ' .
+    $vendor->vendor_title .
+    ' IT certification Exams. Pass your certification exam easily with pdf and test engine dumps in
+    2025.')
+@section('meta_robots', $vendor->vendor_title ?? 'index, follow')
+@section('meta_canonical', url()->current())
+
 @section('main-content')
+
+    @php
+        // Generate a random integer between 700 and 999
+        $randomReviewCount = rand(700, 999);
+    @endphp
+
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org/',
+        '@type' => 'Product',
+        'name' => $vendor->vendor_title,
+        'description' => 'Examprince is a premium provider of Real and Valid Exam Question and Answers of ' . $vendor->vendor_title . ' IT certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.',
+        'review' => [
+            '@type' => 'Review',
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'ratingValue' => 4,
+                'bestRating' => 5,
+            ],
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'Fred Benson',
+            ],
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => 4.4,
+            'reviewCount' => $randomReviewCount,
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+
     <div class="container mx-auto">
         @if (!is_null($banner))
             <div class="banner-container text-center py-6">

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NavControler;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SingleCertificationsExamsController;
 use App\Http\Controllers\VideoTrainingCourseController;
@@ -50,3 +52,20 @@ Route::get('/about', [HomeController::class, 'getAbout']);
 Route::get('/refund-policy', [HomeController::class, 'getRefund']);
 Route::get('/privacy-policy', [HomeController::class, 'getPrivacy']);
 Route::get('/terms-and-conditions', [HomeController::class, 'getTermaCondition']);
+
+// Auth Routes
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
+
+Route::get('/get-client-ip', function (Request $request) {
+    $clientIp = $request->header('cf-connecting-ip')
+        ?? $request->header('x-forwarded-for')
+        ?? $request->ip();
+    return response()->json(['ip' => $clientIp], 200);
+});
+
+

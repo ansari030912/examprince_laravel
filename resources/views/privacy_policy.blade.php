@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('meta_title', 'Updated Exam Questions and Answers by Tech Professionals')
+@section('meta_title', 'ExamPrince privacy Policy')
 @section('meta_description',
     'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
     certification Exams. Pass your certification exam easily with PDF and test engine dumps in 2025.')

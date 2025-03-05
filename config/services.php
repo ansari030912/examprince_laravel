@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'api' => [
+        'base_url' => env('API_BASE_URL', 'https://certsgang.com'),
+        'key' => env('API_KEY', 'b46279cb-13bb-4445-a6f9-6f252b61ae79'),
+    ],
 
 ];

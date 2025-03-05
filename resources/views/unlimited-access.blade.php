@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-{{-- @section('meta_title', 'Updated Exam Questions and Answers by Tech Professionals')
-@section('meta_description',
-    'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
-    certification Exams. Pass your certification exam easily with PDF and test engine dumps in 2025.')
+@section('meta_title', 'ExamPrince Unlimited Access')
+@section('meta_description', 'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
+    certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.')
 @section('meta_robots', 'index, follow')
-@section('meta_canonical', url()->current()) --}}
+@section('meta_canonical', url()->current())
 
 @section('main-content')
     <section class="pb-6 px-6 bg-white">
@@ -21,8 +20,8 @@
                 <div class="max-w-md lg:max-w-6xl mx-auto">
                     <div class="flex flex-wrap items-end -mx-4 mb-6">
                         <div class="max-w-sm sm:max-w-7xl">
-                            <h1 class="font-heading tracking-tight text-4xl sm:text-5xl font-semibold text-gray-800 mb-4">
-                                Unlimited Test Engine &amp; PDF Download Access</h1>
+                            <h2 class="font-heading tracking-tight text-4xl sm:text-5xl font-semibold text-gray-800 mb-4">
+                                Unlimited Test Engine &amp; PDF Download Access</h2>
                             <a class="text-base font-bold text-blue-500 hover:underline" href="/all-te-exams-list">Get
                                 Unlimited Access to all DumpsArena PREMIUM files!</a>
                         </div>
@@ -52,7 +51,7 @@
                                 </div>
                                 <div class="relative p-8 bg-white border border-gray-300 rounded-xl shadow-sm">
                                     <div class="text-center mb-8">
-                                        <h5 class="text-xl font-medium text-gray-800 mb-4">1 Month (PDF)</h5>
+                                        <h3 class="text-xl font-medium text-gray-800 mb-4">1 Month (PDF)</h3>
                                         <div class="mb-4">
                                             <span class="text-5xl font-semibold text-gray-800 tracking-tighter">$
                                                 <!-- -->227.99
@@ -186,7 +185,7 @@
                         <div class="w-full lg:w-1/2 lg:px-4 mb-18 lg:mb-0">
                             <div class="p-8 bg-white border border-gray-300 rounded-xl shadow-sm">
                                 <div class="text-center mb-8">
-                                    <h5 class="text-xl font-medium text-gray-800 mb-4">1 Month (Test Engine)</h5>
+                                    <h3 class="text-xl font-medium text-gray-800 mb-4">1 Month (Test Engine)</h3>
                                     <div class="mb-4">
                                         <span class="text-5xl font-semibold text-gray-800 tracking-tighter">$
                                             <!-- -->203.99

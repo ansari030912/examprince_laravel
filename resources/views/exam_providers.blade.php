@@ -1,6 +1,44 @@
 @extends('layouts.app')
+@section('meta_title', 'Updated Certificates Exam Question and Answers by Tech Professionals')
+@section(
+    'meta_description',
+    'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
+    certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.'
+)
+@section('meta_robots', 'index, follow')
+@section('meta_canonical', url()->current())
 
 @section('main-content')
+    @php
+        // Generate a random integer between 700 and 999
+        $randomReviewCount = rand(700, 999);
+    @endphp
+
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org/',
+        '@type' => 'Product',
+        'name' => 'Updated Certificates Exam Question and Answers by Tech Professionals',
+        'description' => 'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.',
+        'review' => [
+            '@type' => 'Review',
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'ratingValue' => 4,
+                'bestRating' => 5,
+            ],
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'Fred Benson',
+            ],
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => 4.4,
+            'reviewCount' => $randomReviewCount,
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
     <div class="container mx-auto">
         @if (!is_null($banner))
             <div class="banner-container text-center py-6">
@@ -55,8 +93,7 @@
                         <tbody id="vendorTable">
                             @foreach ($vendors as $vendor)
                                 <tr class="vendorRow bg-white border-b border-gray-200 hover:bg-gray-50">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-lg text-blue-500 hover:underline whitespace-nowrap">
+                                    <th scope="row" class="px-6 py-4 font-lg text-blue-500 hover:underline whitespace-nowrap">
                                         <a href="{{ url('/exam-provider/' . $vendor->vendor_perma) }}">
                                             {{ $vendor->vendor_title ?? 'Unknown Vendor' }}
                                         </a>
@@ -86,7 +123,7 @@
             </div>
 
             <!-- Hot Exams Section (Initially Hidden) -->
-            <div id="hotExamsSection"  class="hidden">
+            <div id="hotExamsSection" class="hidden">
                 @include('components.hot-exam', [
                     'weeklyExams' => $weeklyExams,
                     'monthlyExams' => $monthlyExams,

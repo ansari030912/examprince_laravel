@@ -315,6 +315,7 @@
                 }
                 cart.push(cartItem);
                 localStorage.setItem('cart', JSON.stringify(cart));
+                window.dispatchEvent(new Event("cartChanged"));
                 showSnackbar(`✅ "${cartItem.title}" added to cart!`);
             });
         });

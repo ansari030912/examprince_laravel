@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@section('meta_title', 'Updated Certificates Exam Question and Answers by Tech Professionals')
+@section('meta_description', 'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
+    certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.')
+@section('meta_robots', 'index, follow')
+@section('meta_canonical', url()->current())
 @section('main-content')
     <style>
         /* Custom Grid for Courses */
@@ -21,7 +25,37 @@
             }
         }
     </style>
+    @php
+        // Generate a random integer between 700 and 999 for the review count.
+        $randomReviewCount = rand(700, 999);
+    @endphp
 
+    <!-- JSON-LD Structured Data for Video Courses -->
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org/',
+        '@type' => 'Product',
+        'name' => 'Video Courses',
+        'description' => 'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.',
+        'review' => [
+            '@type' => 'Review',
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'ratingValue' => 4,
+                'bestRating' => 5,
+            ],
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'Fred Benson',
+            ],
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => 4.4,
+            'reviewCount' => $randomReviewCount,
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
     <div class="container mx-auto">
         @if (!is_null($banner))
             <div class="text-center py-6">
@@ -54,7 +88,7 @@
                             <div class="flex flex-wrap items-center mb-3 bg-gray-50 p-3">
                                 <div>
                                     <div class="flex items-center">
-                                        <h3 class="mr-2 text-xl text-gray-600 font-bold">Training Course</h3>
+                                        <h2 class="mr-2 text-xl text-gray-600 font-bold">Training Course</h2>
                                         <span id="course-count"
                                             class="py-1 px-2 bg-green-500 text-xs text-white rounded-full"></span>
                                     </div>

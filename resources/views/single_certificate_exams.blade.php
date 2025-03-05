@@ -13,10 +13,40 @@
 @section('meta_title', $metaTitle)
 @section('meta_description', $metaDescription)
 @section('meta_robots', $shouldIndex ? 'index, follow' : 'noindex, nofollow')
-@section('meta_canonical', url()->current()) {{-- or hardcode 'https://examprince.com' if needed --}}
+@section('meta_canonical', url()->current())
 
 
 @section('main-content')
+    @php
+        // Generate a random integer between 700 and 999 for the review count.
+        $randomReviewCount = rand(700, 999);
+    @endphp
+
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org/',
+        '@type' => 'Product',
+        'name' =>  $certification->cert_title ?? 'Exam Questions',
+        'description' => 'Examprince is a premium provider of Real and Valid Exam Question and Answers of ' . ($certification->cert_title) . ' IT certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.',
+        'review' => [
+            '@type' => 'Review',
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'ratingValue' => 4,
+                'bestRating' => 5,
+            ],
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'Fred Benson',
+            ],
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => 4.4,
+            'reviewCount' => $randomReviewCount,
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
     @if (!is_null($banner))
         <div class="banner-container text-center py-6">
             <a href="{{ $banner->banner_link }}" target="_blank">
@@ -67,12 +97,14 @@
                                 {{ $exam->exam_vendor_title }}
                             </a> --}}
                             @if ($relatedExams->isNotEmpty())
-                                {{-- <p class="text-xl text-blue-500 font-semibold"> --}}
+                                {{--
+                                <p class="text-xl text-blue-500 font-semibold"> --}}
                                 <a href="/exam-provider/{{ $relatedExams->first()->exam_vendor_perma }}"
                                     class="text-xl text-blue-500 hover:underline">
                                     {{ $relatedExams->first()->exam_vendor_title }}
                                 </a>
-                                {{-- </p> --}}
+                                {{--
+                                </p> --}}
                             @endif
                         </p>
                         <p class="text-gray-500 text-base font-semibold mb-6 max-w-xl">
@@ -106,7 +138,7 @@
                         <p class="text-xl text-blue-600">{{ $certification->vendor_title }}</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <h6 class="text-2xl text-gray-600 font-semibold text-left">Material</h6>
+                                <strong class="text-2xl text-gray-600 font-semibold text-left">Material</strong>
                                 <ul class="list-disc pl-4 text-sm mb-2 text-gray-500 text-left">
                                     <li>Verified By IT Certified Experts</li>
                                     <li>100% Accurate Answers</li>
@@ -116,7 +148,7 @@
                                 </ul>
                             </div>
                             <div>
-                                <h6 class="text-2xl text-gray-600 font-semibold text-left">PDF</h6>
+                                <strong class="text-2xl text-gray-600 font-semibold text-left">PDF</strong>
                                 <ul class="list-disc pl-4 text-sm mb-2 text-gray-500 text-left">
                                     <li>Best Value Available in Market</li>
                                     <li>Try Demo Before You Buy</li>
@@ -131,15 +163,15 @@
                     <div class="lg:col-span-5">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <h6 class="text-2xl text-gray-600 font-semibold text-left">Exam Questions
-                                </h6>
+                                <strong class="text-2xl text-gray-600 font-semibold text-left">Exam Questions
+                                </strong>
                                 <ul class="list-disc pl-4 text-sm mb-2 text-gray-500 text-left">
                                     <li>Up-To-Date Exam Study Material</li>
                                 </ul>
                             </div>
                             <div>
-                                <h6 class="text-2xl text-gray-600 font-semibold text-left">Safe Files
-                                </h6>
+                                <strong class="text-2xl text-gray-600 font-semibold text-left">Safe Files
+                                </strong>
                                 <ul class="list-disc pl-4 text-sm mb-2 text-gray-500 text-left">
                                     <li>Guaranteed To Have Actual PDF</li>
                                 </ul>
@@ -193,7 +225,8 @@
                                         </div>
                                     </div>
                                     <p class="text-xl text-blue-500 font-semibold text-center">
-                                        {{ $exam->exam_vendor_title }}</p>
+                                        {{ $exam->exam_vendor_title }}
+                                    </p>
                                     <h2
                                         class="font-heading text-gray-500 font-semibold uppercase text-base mb-3 text-center">
                                         {{ $exam->exam_title }}

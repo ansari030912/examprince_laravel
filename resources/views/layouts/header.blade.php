@@ -13,7 +13,7 @@
                     <ul class="hidden 2xl:flex flex-nowrap">
                         <li class="mr-3">
                             <a class="flex flex-wrap items-center py-6 text-sm font-medium text-gray-700 hover:text-green-500 border-b-2 border-transparent hover:border-green-500"
-                                href="{{ url('/') }}">
+                                href={{ url('/exam-providers') }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em"
                                     viewBox="0 0 24 24">
                                     <g fill="none">
@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li class="relative group mr-3">
-                            <a href="{{ url('video-courses') }}">
+                            <a href="{{ url('/video-courses') }}">
                                 <span
                                     class="flex items-center py-6 text-sm font-medium text-gray-700 hover:text-green-500 border-b-2 border-transparent hover:border-green-500 cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em"
@@ -42,7 +42,7 @@
                             </a>
                         </li>
                         <li class="relative group mr-3">
-                            <a href="{{ url('unlimited-access') }}">
+                            <a href="{{ url('/unlimited-access') }}">
                                 <span
                                     class="flex items-center py-6 text-sm font-medium text-gray-700 hover:text-green-500 border-b-2 border-transparent hover:border-green-500 cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em"
@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li class="relative group mr-3">
-                            <a href="{{ url('test-engine-simulator') }}">
+                            <a href="{{ url('/test-engine-simulator') }}">
                                 <span
                                     class="flex items-center py-6 text-sm font-medium text-gray-700 hover:text-green-500 border-b-2 border-transparent hover:border-green-500 cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em"
@@ -78,7 +78,7 @@
                             </a>
                         </li>
                         <li class="relative group">
-                            <a href="{{ url('blogs') }}">
+                            <a href="{{ url('/blogs') }}">
                                 <span
                                     class="flex items-center py-6 text-sm font-medium text-gray-700 hover:text-green-500 border-b-2 border-transparent hover:border-green-500 cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em"
@@ -112,7 +112,7 @@
                         </button> --}}
                         <div class="w-auto p-3">
                             <a class="flex items-center py-6 text-sm font-medium text-gray-700 hover:text-green-500 border-b-2 border-transparent hover:border-green-500 cursor-pointer"
-                                href="{{ url('cart') }}">
+                                href="{{ url('/cart') }}">
                                 <div class="text-base">
                                     <span style="padding-left: 8px; padding-right: 8px; padding-bottom: 2px;"
                                         class="rounded-full bg-green-500 text-white" id="cart-count">
@@ -124,16 +124,40 @@
                                 </p>
                             </a>
                         </div>
+                        <script>
+                            // Function to update header cart count
+                            function updateCartCount() {
+                                const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+                                const cartCountEl = document.getElementById("cart-count");
+                                if (cartCountEl) {
+                                    cartCountEl.textContent = cart.length;
+                                }
+                            }
 
+                            // Call updateCartCount on page load
+                            document.addEventListener("DOMContentLoaded", function() {
+                                updateCartCount();
+
+                                // Listen for a custom event 'cartChanged' to update the header count
+                                window.addEventListener("cartChanged", updateCartCount);
+
+                                // Also update on 'storage' events (if using multiple tabs)
+                                window.addEventListener("storage", function(e) {
+                                    if (e.key === "cart") {
+                                        updateCartCount();
+                                    }
+                                });
+                            });
+                        </script>
                         <div class="w-auto p-3">
                             @if (!optional($loginResponse)->is_logged_in)
-                                <a href="{{ url('/set-login-cookie') }}">
+                                <a href="{{ url('/login') }}">
                                     <b style="padding: 10px;"
                                         class="hover:text-white hover:border-gray-700 border-gray-700 border-2 text-gray-700 hover:bg-gray-700">
                                         Log In
                                     </b>
                                 </a>
-                                <a href="{{ url('register') }}" style="padding: 10px; margin-left: 4px;"
+                                <a href="{{ url('/register') }}" style="padding: 10px; margin-left: 4px;"
                                     class="hover:text-gray-700 bg-gray-700 border-gray-700 border-2 text-white hover:bg-white">
                                     <b>Register Now</b>
                                 </a>
@@ -146,9 +170,9 @@
                                                     alt="User Avatar" />
                                             </div>
                                             <div class="w-auto p-2">
-                                                <h2 class="text-sm font-semibold text-gray-700" id="user-name">
+                                                <strong class="text-sm font-semibold text-gray-700" id="user-name">
                                                     {{ optional($loginResponse)->name }}
-                                                </h2>
+                                                </strong>
                                                 <p class="text-sm font-medium text-gray-500" id="user-email">
                                                     {{ optional($loginResponse)->email }}
                                                 </p>
@@ -174,23 +198,23 @@
                                     <ul class="m-2">
                                         <li
                                             class="px-1 py-2 font-semibold hover:bg-gray-100 hover:text-green-500 cursor-pointer">
-                                            <a href="{{ url('profile/products') }}">Products</a>
+                                            <a href="{{ url('/profile/products') }}">Products</a>
                                         </li>
                                         <li
                                             class="px-1 py-2 font-semibold hover:bg-gray-100 hover:text-green-500 cursor-pointer">
-                                            <a href="{{ url('profile/invoices') }}">Invoice</a>
+                                            <a href="{{ url('/profile/invoices') }}">Invoice</a>
                                         </li>
                                         <li
                                             class="px-1 py-2 font-semibold hover:bg-gray-100 hover:text-green-500 cursor-pointer">
-                                            <a href="{{ url('profile/setting') }}">Setting</a>
+                                            <a href="{{ url('/profile/setting') }}">Setting</a>
                                         </li>
                                         <li
                                             class="px-1 py-2 font-semibold hover:bg-gray-100 hover:text-green-500 cursor-pointer">
-                                            <a href="{{ url('profile/download-history') }}">Download History</a>
+                                            <a href="{{ url('/profile/download-history') }}">Download History</a>
                                         </li>
                                         <li
                                             class="px-1 py-2 font-semibold hover:bg-gray-100 hover:text-green-500 cursor-pointer">
-                                            <a href="{{ url('profile/login-history') }}">Login History</a>
+                                            <a href="{{ url('/profile/login-history') }}">Login History</a>
                                         </li>
                                         <hr />
                                         <li id="sign-out-btn" onclick="handleSignOut()"
@@ -225,14 +249,14 @@
             <div class="relative bg-white flex-1 boLink-gray-700 border-b">
                 <div
                     class="fixed flex justify-between -left-1 p-4 pl-6 -mt-20 -my-4  max-w-xs w-11/12 z-50 bg-gray-50">
-                    <span class="block mt-3  max-w-max" href="#">
+                    <span class="block mt-3  max-w-max" href="/">
                         <img src="{{ asset('img/examprince_dark_svg.svg') }}" alt="ExamPrince Logo" height="170px"
                             width="170px" />
                     </span>
 
                     <div class="w-auto pr-3 -mt-1 -mb-2">
                         <button onclick="closeNav()" class="text-gray-500 hover:text-gray-600 -mr-4 mt-3"
-                            href="#">
+                            href="/">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em"
                                 viewBox="0 0 24 24">
                                 <g fill="none" fill-rule="evenodd">
@@ -253,7 +277,7 @@
                     <ul class="px-4 mb-8">
                         <li>
                             <a class="{{ 'p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md' }}"
-                                href={{ url('/') }}>
+                                href={{ url('/exam-providers') }}>
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em"
                                         viewBox="0 0 24 24">
@@ -272,7 +296,7 @@
                         </li>
                         @if (!isset($showVendors) || !$showVendors)
                             <li>
-                                <a href={{ url('/') }}>
+                                <a href={{ url('/exam-provider/cisco') }}>
                                     <span class="p-3 pl-11 flex items-center justify-between">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 font-medium text-base hover:text-green-500">
@@ -283,7 +307,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href={{ url('/') }} onclick="closeNav()">
+                                <a href={{ url('/exam-provider/microsoft') }} onclick="closeNav()">
                                     <span class="p-3 pl-11 flex items-center justify-between">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 font-medium text-base hover:text-green-500">
@@ -293,7 +317,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <li><a href={{ url('/') }}>
+                            <li><a href={{ url('/exam-provider/pmi') }}>
                                     <span class="p-3 pl-11 flex items-center justify-between">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 font-medium text-base hover:text-green-500">
@@ -303,7 +327,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <li><a href={{ url('/') }}>
+                            <li><a href={{ url('/exam-provider/amazon') }}>
                                     <span class="p-3 pl-11 flex items-center justify-between">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 font-medium text-base hover:text-green-500">
@@ -314,7 +338,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href={{ url('/') }} onclick="closeNav()">
+                                <a href={{ url('/exam-provider/comptia') }} onclick="closeNav()">
                                     <span class="p-3 pl-11 flex items-center justify-between">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 font-medium text-base hover:text-green-500">
@@ -325,7 +349,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href={{ url('/') }}>
+                                <a href={{ url('/exam-provider/dell') }}>
                                     <span class="p-3 pl-11 flex items-center justify-between">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 font-medium text-base hover:text-green-500">
@@ -338,7 +362,7 @@
                         @endif
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/video-courses" onclick="closeNav()">
+                                href={{ url('/video-courses') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -355,7 +379,7 @@
 
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/unlimited-access" onclick="closeNav()">
+                                href={{ url('/unlimited-access') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -371,7 +395,7 @@
                         </li>
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/cart" onclick="closeNav()">
+                                href={{ url('/cart') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 576 512">
@@ -391,7 +415,7 @@
                     <ul class="px-4 pb-8">
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/blogs" onclick="closeNav()">
+                                href={{ url('/blogs') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em"
                                         viewBox="0 0 24 24" style="marginRight: 8px; marginLeft: 2px">
@@ -407,7 +431,7 @@
                         </li>
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/refund-policy" onclick="closeNav()">
+                                href={{ url('/privacy-policy') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -424,7 +448,7 @@
 
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/refund-policy" onclick="closeNav()">
+                                href={{ url('/refund-policy') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="24"
                                         height="24" viewBox="0 0 24 24">
@@ -439,7 +463,7 @@
                         </li>
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/about" onclick="closeNav()">
+                                href={{ url('/about') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="24"
                                         height="24" viewBox="0 0 24 24">
@@ -454,7 +478,7 @@
                         </li>
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/terms-and-conditions" onclick="closeNav()">
+                                href={{ url('/terms-and-conditions') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="24"
                                         height="24" viewBox="0 0 24 24">
@@ -480,7 +504,7 @@
                         </li>
                         <li>
                             <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                href="/faqs" onclick="closeNav()">
+                                href={{ url('/faqs') }} onclick="closeNav()">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="24"
                                         height="24" viewBox="0 0 24 24">
@@ -503,7 +527,7 @@
                             <ul class="px-4 pb-20">
                                 <li>
                                     <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                        href="/profile/products" onclick="closeNav()">
+                                        href={{ url('/profile/products') }} onclick="closeNav()">
                                         <div class="flex items-center">
                                             <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24"
                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -519,7 +543,7 @@
                                 </li>
                                 <li>
                                     <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                        href="/profile/setting" onclick="closeNav()">
+                                        href={{ url('/profile/setting') }} onclick="closeNav()">
                                         <div class="flex items-center">
                                             <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24"
                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -535,7 +559,7 @@
                                 </li>
                                 <li>
                                     <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                        href="/profile/download-history" onclick="closeNav()">
+                                        href={{ url('/profile/download-history') }} onclick="closeNav()">
                                         <div class="flex items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="24"
                                                 height="24" viewBox="0 0 100 100">
@@ -551,7 +575,7 @@
                                 </li>
                                 <li>
                                     <a class="p-3 py-4 flex items-center justify-between text-gray-700 hover:text-green-500 hover:bg-gray-100 rounded-md"
-                                        href="/profile/login-history" onclick="closeNav()">
+                                        href={{ url('/profile/login-history') }} onclick="closeNav()">
                                         <div class="flex items-center">
                                             <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24"
                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -596,9 +620,9 @@
                                             <img src="/avatar.png" class="h-10" alt="" />
                                         </div>
                                         <div class="w-auto p-2">
-                                            <h2 class="text-sm font-bold text-gray-700">
+                                            <strong class="text-sm font-bold text-gray-700">
                                                 {{ optional($loginResponse)->name }}
-                                            </h2>
+                                            </strong>
                                             <p class="text-sm font-medium text-gray-500">
                                                 {{ optional($loginResponse)->email }}
                                             </p>
@@ -607,16 +631,16 @@
                                 @else
                                     <div class="flex flex-wrap -mx-3 -mb-1 -mt-4">
                                         <div class="w-auto p-2">
-                                            <h2 class="text-base font-bold text-gray-500">
-                                                <a href={{ url('/set-login-cookie') }}
+                                            <p class="text-base font-bold text-gray-500">
+                                                <a href={{ url('/login') }}
                                                     class="text-green-500 hover:text-green-600 hover:underline font-bold underline-offset-2"
                                                     onclick="closeNav()">
                                                     Login Now
                                                 </a>
-                                            </h2>
+                                            </p>
                                             <p class="text-sm font-medium text-wrap text-gray-500">
                                                 Do not have an account?
-                                                <a onclick="closeNav()" href={{ url('/') }}
+                                                <a onclick="closeNav()" href={{ url('/register') }}
                                                     class="text-green-500 hover:text-green-600 hover:underline font-bold underline-offset-2">
                                                     Register
                                                 </a>

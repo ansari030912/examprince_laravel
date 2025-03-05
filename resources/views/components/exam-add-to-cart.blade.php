@@ -2,26 +2,7 @@
 <div class="w-full lg:w-12/12 p-4">
     <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-isbt42">
         <div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 css-1r482s6">
-            <div class="lg:pr-5 pt-1 pb-7">
-                <button
-                    class="rounded-full bg-red-600 hover:bg-red-500 cursor-pointer focus:ring-4 focus:ring-red-200 text-white font-semibold h-10 w-full px-7 py-4 flex items-center justify-center gap-2 transition duration-200"
-                    type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
-                        <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-                            <path fill="none" strokeDasharray="14" strokeDashoffset="14" d="M6 19h12">
-                                <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s"
-                                    values="14;0" />
-                            </path>
-                            <path fill="currentColor" d="M12 4 h2 v6 h2.5 L12 14.5M12 4 h-2 v6 h-2.5 L12 14.5">
-                                <animate attributeName="d" calcMode="linear" dur="1.5s" keyTimes="0;0.7;1"
-                                    repeatCount="indefinite"
-                                    values="M12 4 h2 v6 h2.5 L12 14.5M12 4 h-2 v6 h-2.5 L12 14.5;M12 4 h2 v3 h2.5 L12 11.5M12 4 h-2 v3 h-2.5 L12 11.5;M12 4 h2 v6 h2.5 L12 14.5M12 4 h-2 v6 h-2.5 L12 14.5" />
-                            </path>
-                        </g>
-                    </svg>
-                    <span class="text-lg">Download Demo</span>
-                </button>
-            </div>
+            @include('components.download-demo')
             <hr class="mb-4 mr-5" style="border:2px solid #F5F6FA">
             <p class="text-xl font-bold text-gray-700 mb-4">Select Product</p>
             <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
@@ -65,9 +46,9 @@
                                         </p>
                                     </div>
                                     <div>
-                                        <h6 class="MuiTypography-root MuiTypography-h6 css-1oir7cy">
+                                        <strong class="MuiTypography-root MuiTypography-h6 css-1oir7cy">
                                             ${{ number_format($product->price, 2) }}
-                                        </h6>
+                                        </strong>
                                         <p class="MuiTypography-root MuiTypography-body2 css-f9vin7">
                                             <span
                                                 style="text-decoration:line-through;color:#ff7043;font-size:0.8rem;text-align:right">
@@ -227,7 +208,8 @@
             let snackbar = document.createElement('div');
             snackbar.textContent = message;
             snackbar.classList.add(
-                'fixed', 'bottom-5', 'right-5', 'px-6', 'py-3', 'rounded-lg', 'shadow-lg', 'text-white', 'text-lg', 'font-semibold',
+                'fixed', 'bottom-5', 'right-5', 'px-6', 'py-3', 'rounded-lg', 'shadow-lg', 'text-white',
+                'text-lg', 'font-semibold',
                 'transition-all', 'duration-300', 'ease-in-out', 'z-50'
             );
 
@@ -276,7 +258,7 @@
 
             cart.push(cartItem);
             localStorage.setItem('cart', JSON.stringify(cart));
-
+            window.dispatchEvent(new Event("cartChanged"));
             showSnackbar(`✅ "${selectedProduct.title}" added to cart!`);
         });
     });
