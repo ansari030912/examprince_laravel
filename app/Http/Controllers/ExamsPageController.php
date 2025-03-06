@@ -149,13 +149,13 @@ class ExamsPageController extends Controller
                     break;
                 case 5: // PDF + ETE
                     $sumDiscounted = $pdfDiscounted + $eteDiscounted;
-                    $fullPriceFloat = $sumDiscounted;
+                    $fullPriceFloat = $basePdf + $baseEte;
                     $finalPriceFloat = round($sumDiscounted * 0.70, 2);
                     $offValue = (int) ($couponPercent + 30);
                     break;
                 case 6: // PDF + ETE + SC
                     $sumDiscounted = $pdfDiscounted + $eteDiscounted + $scDiscounted;
-                    $fullPriceFloat = $sumDiscounted;
+                    $fullPriceFloat = $basePdf + $baseEte + $baseSc;
                     $finalPriceFloat = round($sumDiscounted * 0.70, 2);
                     $offValue = (int) ($couponPercent + 30);
                     break;

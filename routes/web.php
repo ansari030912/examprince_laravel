@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NavControler;
@@ -69,3 +72,12 @@ Route::get('/get-client-ip', function (Request $request) {
 });
 
 
+// GET route to display the checkout page.
+Route::get('/cart/checkout', function () {
+    return view('cart.checkout');
+})->name('checkout');
+
+// POST route for coupon validation.
+Route::post('/cart/process', [CartController::class, 'processCart'])->name('cart.process');
+Route::post('/cart/checkout/coupon-check', [CouponController::class, 'check'])->name('coupon.check');
+Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
