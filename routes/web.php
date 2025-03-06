@@ -76,8 +76,4 @@ Route::get('/get-client-ip', function (Request $request) {
 Route::get('/cart/checkout', function () {
     return view('cart.checkout');
 })->name('checkout');
-
-// POST route for coupon validation.
-Route::post('/cart/process', [CartController::class, 'processCart'])->name('cart.process');
-Route::post('/cart/checkout/coupon-check', [CouponController::class, 'check'])->name('coupon.check');
-Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::post('/cart/process', [CheckoutController::class, 'process'])->name('cart.process');
