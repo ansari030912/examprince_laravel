@@ -4,13 +4,19 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\DownloadHistoryController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginHistoryController;
 use App\Http\Controllers\NavControler;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SingleCertificationsExamsController;
 use App\Http\Controllers\VideoTrainingCourseController;
 use Illuminate\Support\Facades\Route;
@@ -79,11 +85,28 @@ Route::get('/get-client-ip', function (Request $request) {
     return response()->json(['ip' => $clientIp], 200);
 });
 
+// profile
+Route::get('/profile/products', [ProductController::class, 'index'])->name('profile.products');
+Route::get('/profile/download-history', [DownloadHistoryController::class, 'index'])->name('profile.download_history');
+Route::get('/profile/login-history', [LoginHistoryController::class, 'index'])->name('profile.login_history');
+Route::get('/profile/invoices', [InvoiceController::class, 'index'])->name('profile.invoices');
+// profile setting
+Route::get('/profile/settings', [SettingController::class, 'showSettings'])->name('profile.settings');
+Route::post('/profile/settings', [SettingController::class, 'updatePassword'])->name('profile.update_password');
+
 
 // GET route to display the checkout page.
-Route::get('/cart/checkout', function () {
+Route::get('/cart', function () {
     return view('cart.checkout');
 })->name('checkout');
 Route::post('/cart/process', [CheckoutController::class, 'process'])->name('cart.process');
 Route::post('/cart/coupon', [CheckoutController::class, 'applyCoupon'])->name('cart.coupon');
 Route::post('/cart/checkout/payment', [CheckoutController::class, 'checkout'])->name('cart.checkout.payment');
+
+
+// sitemaps
+Route::get('/sitemap.xml', function () {
+    $xml = view('sitemaps.sitemap_index')->render();
+    return response($xml, 200)
+        ->header('Content-Type', 'application/xml');
+});

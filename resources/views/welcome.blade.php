@@ -48,5 +48,6 @@
         'monthlyExams' => $monthlyExams,
     ])
     @include('components.home-certificates')
+    @include('components.testimonial-carousel')
 
 @endsection

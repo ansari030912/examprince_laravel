@@ -9,7 +9,9 @@
 
     <meta name="description" content="@yield('meta_title', 'Examprince provides real and valid IT certification exam questions.')">
     <meta name="robots" content="@yield('meta_robots', 'index, follow')">
-
+    @hasSection('meta_referrer')
+        <meta name="referrer" content="@yield('meta_referrer')">
+    @endif
     <!-- Canonical URL -->
     <link rel="canonical" href="@yield('meta_canonical', url()->current())">
 

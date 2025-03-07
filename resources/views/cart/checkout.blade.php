@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('meta_title', 'ExamPrince - Reset Password')
+@section('meta_description',
+    'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
+    certification Exams. Pass your certification exam easily with PDF and test engine dumps in 2025.')
+@section('meta_robots', 'no-index')
+@section('meta_referrer', 'no-referrer')
+@section('meta_canonical', url()->current())
+
 @section('main-content')
     <section class="pt-9 pb-16 bg-white" style="border-radius: 12px;">
         <div class="container mx-auto px-4">
