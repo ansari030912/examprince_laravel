@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('meta_title', "ExamPrince FAQ's")
+@section('meta_title', "ExamPrince - FAQ's")
 @section('meta_description', 'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
     certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.')
 @section('meta_robots', 'index, follow')

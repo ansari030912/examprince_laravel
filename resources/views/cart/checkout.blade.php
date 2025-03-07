@@ -9,7 +9,8 @@
                     <div class="flex flex-wrap items-center">
                         <span class="text-xs text-gray-500 group-hover:text-gray-900 transition duration-200">Home</span>
                         <div class="text-gray-500 group-hover:text-gray-900 transition duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                fill="none">
                                 <path
                                     d="M12.9465 9.40832L8.22986 4.69999C8.15239 4.62188 8.06022 4.55989 7.95867 4.51758C7.85712 4.47527 7.7482 4.45349 7.63819 4.45349C7.52818 4.45349 7.41926 4.47527 7.31771 4.51758C7.21616 4.55989 7.124 4.62188 7.04653 4.69999C6.89132 4.85613 6.8042 5.06734 6.8042 5.28749C6.8042 5.50764 6.89132 5.71885 7.04653 5.87499L11.1715 10.0417L7.04653 14.1667C6.89132 14.3228 6.8042 14.534 6.8042 14.7542C6.8042 14.9743 6.89132 15.1855 7.04653 15.3417C7.12371 15.4204 7.21574 15.483 7.31731 15.526C7.41887 15.5689 7.52794 15.5912 7.63819 15.5917C7.74845 15.5912 7.85752 15.5689 7.95908 15.526C8.06064 15.483 8.15268 15.4204 8.22986 15.3417L12.9465 10.6333C13.0311 10.5553 13.0986 10.4606 13.1448 10.3552C13.191 10.2497 13.2148 10.1359 13.2148 10.0208C13.2148 9.90574 13.191 9.7919 13.1448 9.68648C13.0986 9.58107 13.0311 9.48636 12.9465 9.40832Z"
                                     fill="currentColor"></path>
@@ -22,7 +23,8 @@
                         <span
                             class="text-xs text-gray-500 group-hover:text-gray-900 transition duration-200">Checkout</span>
                         <div class="text-gray-500 group-hover:text-gray-900 transition duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                fill="none">
                                 <path
                                     d="M12.9465 9.40832L8.22986 4.69999C8.15239 4.62188 8.06022 4.55989 7.95867 4.51758C7.85712 4.47527 7.7482 4.45349 7.63819 4.45349C7.52818 4.45349 7.41926 4.47527 7.31771 4.51758C7.21616 4.55989 7.124 4.62188 7.04653 4.69999C6.89132 4.85613 6.8042 5.06734 6.8042 5.28749C6.8042 5.50764 6.89132 5.71885 7.04653 5.87499L11.1715 10.0417L7.04653 14.1667C6.89132 14.3228 6.8042 14.534 6.8042 14.7542C6.8042 14.9743 6.89132 15.1855 7.04653 15.3417C7.12371 15.4204 7.21574 15.483 7.31731 15.526C7.41887 15.5689 7.52794 15.5912 7.63819 15.5917C7.74845 15.5912 7.85752 15.5689 7.95908 15.526C8.06064 15.483 8.15268 15.4204 8.22986 15.3417L12.9465 10.6333C13.0311 10.5553 13.0986 10.4606 13.1448 10.3552C13.191 10.2497 13.2148 10.1359 13.2148 10.0208C13.2148 9.90574 13.191 9.7919 13.1448 9.68648C13.0986 9.58107 13.0311 9.48636 12.9465 9.40832Z"
                                     fill="currentColor"></path>
@@ -140,17 +142,17 @@
         }
 
         // Coupon form submission with snackbar update and refreshing order data.
-        document.querySelector('form[action="{{ route('cart.coupon') }}"]').addEventListener('submit', function (e) {
+        document.querySelector('form[action="{{ route('cart.coupon') }}"]').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(this);
 
             fetch("{{ route('cart.coupon') }}", {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: formData
-            })
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: formData
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.appliedCoupon) {
@@ -175,16 +177,16 @@
 
             if (cartData) {
                 fetch("{{ route('cart.process') }}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        cartData: cartData,
-                        coupon: appliedCoupon // Pass the applied coupon here.
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            cartData: cartData,
+                            coupon: appliedCoupon // Pass the applied coupon here.
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
                         // Update the applied coupon display with the response from the process API.
@@ -210,28 +212,28 @@
 
                                 itemsHtml += `
                                        <div class="flex -m-2 ${borderClasses}" data-id="${item.id}">
-                <div class="w-auto hidden lg:inline-flex p-2">
-                    <img class="rounded-lg" src="/package-small-min_optimized.png" alt="" width="160px">
-                </div>
-                <div class="p-2 pl-5 lg:pl-0 w-full flex flex-col justify-center">
-                    <div class="flex justify-between">
-                        <div>
-                            <p class="mb-1.5 font-semibold text-gray-600 text-lg">${item.exam_code}</p>
-                            <p class="mb-1.5 font-semibold text-blue-500 text-base">${item.exam_title}</p>
-                            <p class="mb-1.5 text-sm text-green-600">${item.title}</p>
-                        </div>
-                        <button class="delete-btn cursor-pointer flex flex-col justify-center" data-id="${item.id}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                                <path fill="red" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="flex justify-between">
-                        <p class="text-base">x1</p>
-                        <span class="text-xl font-bold text-green-500">$${item.price} / <span class="text-gray-500 text-sm line-through">$${item.full_price}</span></span>
-                    </div>
-                </div>
-            </div>
+                                            <div class="w-auto hidden lg:inline-flex p-2">
+                                                <img class="rounded-lg" src="/package-small-min_optimized.png" alt="" width="160px">
+                                            </div>
+                                            <div class="p-2 pl-5 lg:pl-0 w-full flex flex-col justify-center">
+                                                <div class="flex justify-between">
+                                                    <div>
+                                                        <p class="mb-1.5 font-semibold text-gray-600 text-lg">${item.exam_code}</p>
+                                                        <p class="mb-1.5 font-semibold text-blue-500 text-base">${item.exam_title}</p>
+                                                        <p class="mb-1.5 text-sm text-green-600">${item.title}</p>
+                                                    </div>
+                                                    <button class="delete-btn cursor-pointer flex flex-col justify-center" data-id="${item.id}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+                                                            <path fill="red" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"></path>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <p class="text-base">x1</p>
+                                                    <span class="text-xl font-bold text-green-500">$${item.price} / <span class="text-gray-500 text-sm line-through">$${item.full_price}</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     `;
                             });
                             orderItemsContainer.innerHTML = itemsHtml;
@@ -265,7 +267,10 @@
         }
 
         // Checkout button event listener.
-        document.getElementById('checkoutBtn').addEventListener('click', function () {
+        document.getElementById('checkoutBtn').addEventListener('click', function() {
+            const checkoutBtn = this;
+            const originalBtnText = checkoutBtn.innerHTML;
+
             const fullName = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
             const termsChecked = document.getElementById('terms').checked;
@@ -289,6 +294,19 @@
                 return;
             }
 
+            // Disable the button and show loading spinner.
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerHTML = `<svg class="animate-spin inline -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                              </svg> Loading...`;
+
+            // Set a timer to remove loading state after 10 seconds.
+            const loadingTimer = setTimeout(() => {
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerHTML = originalBtnText;
+            }, 5000);
+
             // All validations passed. Get client IP.
             fetch("/get-client-ip")
                 .then(response => response.json())
@@ -311,13 +329,13 @@
 
                     // Call the secure checkout API endpoint.
                     fetch("{{ route('cart.checkout.payment') }}", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                        },
-                        body: JSON.stringify(checkoutData)
-                    })
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify(checkoutData)
+                        })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success === true) {
@@ -326,26 +344,31 @@
                                     window.location.href = data.redirect_link;
                                 }, 2000);
                             } else {
+                                checkoutBtn.disabled = false;
+                                checkoutBtn.innerHTML = originalBtnText;
                                 showSnackbar(data.message || "Payment initiation failed.");
                             }
                         })
                         .catch(error => {
                             console.error("Error during checkout:", error);
+                            checkoutBtn.disabled = false;
+                            checkoutBtn.innerHTML = originalBtnText;
                             showSnackbar("Error initiating payment.");
                         });
                 })
                 .catch(error => {
                     console.error("Error fetching client IP:", error);
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerHTML = originalBtnText;
                     showSnackbar("Error determining client IP.");
                 });
         });
-
 
         // Attach click event listeners to delete buttons to update localStorage and refresh the view.
         function attachDeleteListeners() {
             const deleteButtons = document.querySelectorAll('.delete-btn');
             deleteButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-id');
                     let cart = JSON.parse(localStorage.getItem('cart')) || [];
                     cart = cart.filter(item => item.id != itemId);

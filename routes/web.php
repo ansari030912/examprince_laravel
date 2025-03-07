@@ -4,10 +4,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NavControler;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SingleCertificationsExamsController;
 use App\Http\Controllers\VideoTrainingCourseController;
@@ -63,6 +65,12 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('forgot.form');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot'])->name('forgot.submit');
+
+Route::get('/reset-password', [ResetPasswordController::class, 'showResetForm'])->name('reset.form');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('reset.submit');
 
 Route::get('/get-client-ip', function (Request $request) {
     $clientIp = $request->header('cf-connecting-ip')
