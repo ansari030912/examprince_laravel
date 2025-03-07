@@ -139,6 +139,7 @@
                             let itemsHtml = "";
                             let subtotal = 0;
                             let totalPrice = 0;
+                            let maxOff = 0;
 
                             data.cartData.forEach(item => {
                                 // Parse price values from the processed data.
@@ -146,6 +147,7 @@
                                 let price = parseFloat(item.price);
                                 subtotal += fullPrice;
                                 totalPrice += price;
+                                maxOff = Math.max(maxOff, parseFloat(item.off));
 
                                 itemsHtml += `
                                     <div class="flex -m-2 border-b-2 mb-4" data-id="${item.id}">
@@ -176,14 +178,13 @@
                             orderItemsContainer.innerHTML = itemsHtml;
                             attachDeleteListeners();
 
-                            // Calculate overall discount amount and percentage.
+                            // Calculate overall discount amount.
                             let discount = subtotal - totalPrice;
-                            let off = subtotal ? Math.round((discount / subtotal) * 100) : 0;
 
                             // Update totals in the DOM.
                             document.getElementById("subtotal").innerText = "$" + subtotal.toFixed(2);
                             document.getElementById("discount").innerText = "$" + discount.toFixed(2);
-                            document.getElementById("off").innerText = off + "%";
+                            document.getElementById("off").innerText = maxOff + "%";
                             document.getElementById("totalPrice").innerText = "$" + totalPrice.toFixed(2);
 
                             // Show checkout details when items exist.
