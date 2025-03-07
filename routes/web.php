@@ -5,6 +5,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DownloadHistoryController;
+use App\Http\Controllers\ExamProviderSitemapController;
+use App\Http\Controllers\ExamQuestionsSitemapController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
@@ -18,6 +20,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SingleCertificationsExamsController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\VideoTrainingCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamProviderController;
@@ -103,10 +106,13 @@ Route::post('/cart/process', [CheckoutController::class, 'process'])->name('cart
 Route::post('/cart/coupon', [CheckoutController::class, 'applyCoupon'])->name('cart.coupon');
 Route::post('/cart/checkout/payment', [CheckoutController::class, 'checkout'])->name('cart.checkout.payment');
 
+// use App\Http\Controllers\ExamQuestionsSitemapController;
+
 
 // sitemaps
-Route::get('/sitemap.xml', function () {
-    $xml = view('sitemaps.sitemap_index')->render();
-    return response($xml, 200)
-        ->header('Content-Type', 'application/xml');
-});
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+Route::get('/exam-questions-{page}/sitemap.xml', [SitemapController::class, 'examQuestions']);
+Route::get('/exam-provider-{page}/sitemap.xml', [SitemapController::class, 'examProviders']);
+Route::get('/vendor-exam-questions-{page}/sitemap.xml', [SitemapController::class, 'certificates']);
+Route::get('training-course-{page}/sitemap.xml', [SitemapController::class, 'trainingCourses']);
