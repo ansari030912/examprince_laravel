@@ -77,3 +77,5 @@ Route::get('/cart/checkout', function () {
     return view('cart.checkout');
 })->name('checkout');
 Route::post('/cart/process', [CheckoutController::class, 'process'])->name('cart.process');
+Route::post('/cart/coupon', [CheckoutController::class, 'applyCoupon'])->name('cart.coupon');
+Route::post('/cart/checkout/payment', [CheckoutController::class, 'checkout'])->name('cart.checkout.payment');
