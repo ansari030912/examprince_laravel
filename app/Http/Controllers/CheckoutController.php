@@ -37,16 +37,15 @@ class CheckoutController extends Controller
             ]);
         }
     }
-
     public function process(Request $request)
     {
         // Decode the JSON string from the request into an array.
         $cartData = json_decode($request->input('cartData'), true);
 
         // Determine the coupon code:
-        // 1. If a coupon is provided via the request input, use that.
-        // 2. Otherwise, if a coupon code exists in cookies, use that.
-        // 3. Otherwise, use 'MEGASALE' as the default.
+        // 1. Use request input if provided.
+        // 2. Else, check if a coupon code exists in cookies.
+        // 3. Otherwise, default to 'MEGASALE'.
         if ($request->has('coupon') && !empty($request->input('coupon'))) {
             $couponCode = $request->input('coupon');
         } elseif ($request->hasCookie('coupon_code')) {
@@ -56,21 +55,55 @@ class CheckoutController extends Controller
         }
 
         // Look up the coupon in the coupons table where it is active.
-        $coupon = Coupon::where('coupon', $couponCode)
+        $coupon = \App\Models\Coupon::where('coupon', $couponCode)
             ->where('coupon_active', 1)
             ->first();
         $couponOff = $coupon ? (float) $coupon->coupon_off : 0;
 
         $processedCart = [];
 
+        // Loop through each item in the cart data.
         foreach ($cartData as $item) {
-            // Check if exam_code exists in the cart item.
+            // For items with title "1 Month (PDF)" or "1 Month (Test Engine)",
+            // ignore any price in cartData and re-read the actual price from the unlimited_access table.
+            if (
+                isset($item['title']) &&
+                ($item['title'] === '1 Month (PDF)' || $item['title'] === '1 Month (Test Engine)')
+            ) {
+                // Fetch the latest unlimited_access record.
+                $unlimitedAccess = \App\Models\UnlimitedAccess::latest()->first();
+                if ($unlimitedAccess) {
+                    if ($item['title'] === '1 Month (PDF)') {
+                        $fullPrice = (float) $unlimitedAccess->pdf_full_price;
+                        $basePrice = (float) $unlimitedAccess->pdf_price;
+                    } else { // "1 Month (Test Engine)"
+                        $fullPrice = (float) $unlimitedAccess->te_full_price;
+                        $basePrice = (float) $unlimitedAccess->te_price;
+                    }
+                    // Apply coupon discount on the actual base price from the table.
+                    $discountedPrice = $basePrice * (1 - $couponOff / 100);
+                    $finalOff = $couponOff;
+                } else {
+                    // Fallback: use values from cartData if unlimited_access record is not found.
+                    $fullPrice = isset($item['full_price']) ? (float) $item['full_price'] : 0;
+                    $discountedPrice = isset($item['price']) ? (float) $item['price'] : 0;
+                    $finalOff = $couponOff;
+                }
+
+                $item['full_price'] = number_format($fullPrice, 2, '.', '');
+                $item['price'] = number_format($discountedPrice, 2, '.', '');
+                $item['off'] = $finalOff;
+                $processedCart[] = $item;
+                continue;
+            }
+
+            // For items that don't have an exam_code, just pass them through.
             if (!isset($item['exam_code'])) {
                 $processedCart[] = $item;
                 continue;
             }
 
-            // Find the exam from the single_exam table matching exam_code.
+            // Otherwise, process using the exam table.
             $exam = SingleExam::where('exam_code', $item['exam_code'])->first();
 
             // If exam is not found, use the original item values.
@@ -79,67 +112,58 @@ class CheckoutController extends Controller
                 continue;
             }
 
-            // Get the individual prices from the exam record.
+            // Get prices from the exam record.
             $price_sc = (float) $exam->exam_sc_price;
             $price_ete = (float) $exam->exam_ete_price;
             $price_pdf = (float) $exam->exam_pdf_price;
-
             $fullPrice = 0;
             $discountedPrice = 0;
-            $finalOff = $couponOff; // default discount percentage
+            $finalOff = $couponOff; // default coupon discount
 
-            // Calculate full price and discounted price based on the cart item title.
             switch ($item['title']) {
                 case 'Test Engine Only':
                     $fullPrice = $price_ete;
                     $discountedPrice = $fullPrice * (1 - $couponOff / 100);
                     break;
-
                 case 'PDF Only':
                     $fullPrice = $price_pdf;
                     $discountedPrice = $fullPrice * (1 - $couponOff / 100);
                     break;
-
                 case 'Training Course Only':
                     $fullPrice = $price_sc;
                     $discountedPrice = $fullPrice * (1 - $couponOff / 100);
                     break;
-
                 case 'Full Premium Bundle':
-                    // Sum all three prices.
                     $fullPrice = $price_sc + $price_ete + $price_pdf;
-                    // Apply coupon discount then an additional 30% off.
                     $discountedPrice = ($fullPrice * (1 - $couponOff / 100)) * 0.70;
                     $finalOff = $couponOff + 30;
                     break;
-
                 case 'PDF & Test Engine Bundle':
-                    // Sum the PDF and Test Engine prices.
                     $fullPrice = $price_pdf + $price_ete;
                     $discountedPrice = ($fullPrice * (1 - $couponOff / 100)) * 0.70;
                     $finalOff = $couponOff + 30;
                     break;
-
                 default:
                     $fullPrice = isset($item['full_price']) ? (float) $item['full_price'] : 0;
                     $discountedPrice = isset($item['price']) ? (float) $item['price'] : 0;
                     break;
             }
 
-            // Format prices as strings with two decimals.
             $item['full_price'] = number_format($fullPrice, 2, '.', '');
             $item['price'] = number_format($discountedPrice, 2, '.', '');
             $item['off'] = $finalOff;
-
             $processedCart[] = $item;
         }
 
         return response()->json([
             'message' => 'Cart data processed successfully!',
             'cartData' => $processedCart,
-            'appliedCoupon' => $couponCode, // Return the coupon code used for processing.
+            'appliedCoupon' => $couponCode,
         ]);
     }
+
+
+
     public function checkout(Request $request)
     {
         // Validate incoming checkout data.

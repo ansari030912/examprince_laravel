@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('meta_title', 'ExamPrince Unlimited Access')
-@section('meta_description', 'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
+@section('meta_description',
+    'Examprince is a premium provider of Real and Valid Exam Question and Answers of IT
     certification Exams. Pass your certification exam easily with pdf and test engine dumps in 2025.')
 @section('meta_robots', 'index, follow')
 @section('meta_canonical', url()->current())
@@ -15,19 +16,25 @@
                 </a>
             </div>
         @endif
+
         <section class="pb-12 pt-4">
             <div class="container px-4 mx-auto">
                 <div class="max-w-md lg:max-w-6xl mx-auto">
+                    <!-- Heading & Subtitle -->
                     <div class="flex flex-wrap items-end -mx-4 mb-6">
                         <div class="max-w-sm sm:max-w-7xl">
                             <h2 class="font-heading tracking-tight text-4xl sm:text-5xl font-semibold text-gray-800 mb-4">
-                                Unlimited Test Engine &amp; PDF Download Access</h2>
-                            <a class="text-base font-bold text-blue-500 hover:underline" href="/all-te-exams-list">Get
-                                Unlimited Access to all DumpsArena PREMIUM files!</a>
+                                Unlimited Test Engine &amp; PDF Download Access
+                            </h2>
+                            <a class="text-base font-bold text-blue-500 hover:underline" href="/all-te-exams-list">
+                                Get Unlimited Access to all DumpsArena PREMIUM files!
+                            </a>
                         </div>
                     </div>
+
+                    <!-- Features List -->
                     <div class="mb-6 text-gray-400 text-lg font-semibold">
-                        <ul style="list-style-type:none;padding:0">
+                        <ul style="list-style-type:none; padding:0;">
                             <li>✔ Up-to-Date and Reliable Questions</li>
                             <li>✔ Precise and Verified Answers</li>
                             <li>✔ Quick, Free Updates to Include the Latest Question Pools</li>
@@ -36,39 +43,49 @@
                             <li>✔ Monthly Access to Download Any 15 Files</li>
                         </ul>
                     </div>
+
                     <div class="flex flex-wrap items-end -mx-4 mb-20">
                         <div class="max-w-sm sm:max-w-7xl">
-                            <p class="text-base font-bold text-gray-500">Take advantage of premium Files which are Latest
-                                and valid by DumpsArena!</p>
+                            <p class="text-base font-bold text-gray-500">
+                                Take advantage of premium Files which are Latest and valid by DumpsArena!
+                            </p>
                         </div>
                     </div>
+
                     <div class="flex flex-wrap -mx-4">
+                        <!-- PDF Plan -->
                         <div class="w-full lg:w-1/2 mb-8 lg:mb-0">
                             <div class="relative">
+                                <!-- "Recommended" Badge -->
                                 <div
                                     class="absolute top-0 left-0 w-full -mt-10 pt-2 px-2 pb-14 text-center rounded-t-xl bg-green-500">
                                     <span class="text-xs font-bold text-white">RECOMMENDED</span>
                                 </div>
+
                                 <div class="relative p-8 bg-white border border-gray-300 rounded-xl shadow-sm">
                                     <div class="text-center mb-8">
                                         <h3 class="text-xl font-medium text-gray-800 mb-4">1 Month (PDF)</h3>
                                         <div class="mb-4">
-                                            <span class="text-5xl font-semibold text-gray-800 tracking-tighter">$
-                                                <!-- -->227.99
+                                            <span class="text-5xl font-semibold text-gray-800 tracking-tighter">
+                                                ${{ $pdfPrice ?? '0.00' }}
                                             </span>
-                                            <span class="text-lg text-gray-400 font-medium">/$
-                                                <!-- -->379.99
+                                            <!-- Show original full price from DB, if you want -->
+                                            <span class="text-lg text-gray-400 font-medium">
+                                                /${{ $unlimitedAccess->pdf_full_price ?? '0.00' }}
                                             </span>
                                         </div>
                                         <span class="text-gray-400">1 Month Duration</span>
                                     </div>
-                                    <button
+
+                                    <!-- Buy Now Button (PDF) -->
+                                    <button id="buyPdfBtn" type="button"
                                         class="group relative w-full h-12 mb-8 flex items-center justify-center px-5 p-px font-bold text-gray-700 bg-yellowGreen-600 rounded-lg transition-all duration-300 cursor-pointer">
                                         <div
                                             class="absolute top-0 left-0 w-full h-full rounded-lg ring ring-green-500 animate-pulse group-hover:ring-0 transition duration-300">
                                         </div>
                                         <span>Buy Now</span>
                                     </button>
+
                                     <ul>
                                         <li class="flex items-center mb-4">
                                             <div
@@ -182,23 +199,33 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End of PDF Plan -->
+
+                        <!-- Test Engine Plan -->
                         <div class="w-full lg:w-1/2 lg:px-4 mb-18 lg:mb-0">
                             <div class="p-8 bg-white border border-gray-300 rounded-xl shadow-sm">
                                 <div class="text-center mb-8">
                                     <h3 class="text-xl font-medium text-gray-800 mb-4">1 Month (Test Engine)</h3>
                                     <div class="mb-4">
-                                        <span class="text-5xl font-semibold text-gray-800 tracking-tighter">$
-                                            <!-- -->203.99
+                                        <!-- Show discounted tePrice here -->
+                                        <span class="text-5xl font-semibold text-gray-800 tracking-tighter">
+                                            ${{ $tePrice ?? '0.00' }}
                                         </span>
-                                        <span class="text-lg text-gray-400 font-medium">/$
-                                            <!-- -->339.99
+                                        <!-- Show original full price from DB, if you want -->
+                                        <span class="text-lg text-gray-400 font-medium">
+                                            /${{ $unlimitedAccess->te_full_price ?? '0.00' }}
                                         </span>
                                     </div>
+
                                     <span class="text-gray-400">1 Month Duration</span>
                                 </div>
-                                <button
-                                    class="flex items-center justify-center w-full h-12 px-4 mb-8 text-center text-base text-white hover:text-gray-100 font-bold bg-green-500 hover:bg-green-600 border border-yellowGreen-600 rounded-lg transition duration-200 cursor-pointer">Buy
-                                    Now</button>
+
+                                <!-- Buy Now Button (Test Engine) -->
+                                <button id="buyTeBtn" type="button"
+                                    class="flex items-center justify-center w-full h-12 px-4 mb-8 text-center text-base text-white hover:text-gray-100 font-bold bg-green-500 hover:bg-green-600 border border-yellowGreen-600 rounded-lg transition duration-200 cursor-pointer">
+                                    Buy Now
+                                </button>
+
                                 <ul>
                                     <li class="flex items-center mb-4">
                                         <div
@@ -299,9 +326,110 @@
                                 </ul>
                             </div>
                         </div>
+                        <!-- End of Test Engine Plan -->
                     </div>
                 </div>
             </div>
         </section>
     </section>
+    <script>
+        // Build the PDF plan object using only data available from $unlimitedAccess
+        const pdfPlan = {
+            id: 101, // or a DB ID if you have one
+            title: "1 Month (PDF)",
+            full_price: "{{ $unlimitedAccess->pdf_full_price ?? '' }}", // empty if not found
+            price: "{{ $unlimitedAccess->pdf_price ?? '' }}", // empty if not found
+            off: "", // no static discount
+            cart: "{{ $unlimitedAccess->pdf_cart ?? '' }}", // empty if not found
+
+            // These fields will be empty strings unless you have columns for them
+            vendor_perma: "",
+            vendor_title: "",
+            exam_code: "",
+            exam_title: ""
+        };
+
+        // Same approach for the Test Engine plan
+        const tePlan = {
+            id: 102,
+            title: "1 Month (Test Engine)",
+            full_price: "{{ $unlimitedAccess->te_full_price ?? '' }}",
+            price: "{{ $unlimitedAccess->te_price ?? '' }}",
+            off: "",
+            cart: "{{ $unlimitedAccess->te_cart ?? '' }}",
+
+            vendor_perma: "",
+            vendor_title: "",
+            exam_code: "",
+            exam_title: ""
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const buyPdfBtn = document.getElementById('buyPdfBtn');
+            const buyTeBtn = document.getElementById('buyTeBtn');
+
+            // Simple snackbar utility
+            function showSnackbar(message, isError = false) {
+                const snackbar = document.createElement('div');
+                snackbar.textContent = message;
+                snackbar.classList.add(
+                    'fixed', 'bottom-5', 'right-5', 'px-6', 'py-3', 'rounded-lg', 'shadow-lg',
+                    'text-white', 'text-lg', 'font-semibold',
+                    'transition-all', 'duration-300', 'ease-in-out', 'z-50'
+                );
+                snackbar.classList.add(isError ? 'bg-red-600' : 'bg-green-600');
+
+                document.body.appendChild(snackbar);
+
+                setTimeout(() => {
+                    snackbar.classList.add('opacity-0');
+                    setTimeout(() => {
+                        snackbar.remove();
+                    }, 300);
+                }, 2500);
+            }
+
+            // Add item to cart (localStorage)
+            function addItemToCart(selectedProduct) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Check if product already in cart
+                const productExists = cart.some(item => item.id === selectedProduct.id);
+                if (productExists) {
+                    showSnackbar(`❌ "${selectedProduct.title}" is already in your cart!`, true);
+                    return;
+                }
+
+                // Ensure that if any property is undefined, we store it as empty string
+                const cartItem = {
+                    id: selectedProduct.id || '',
+                    title: selectedProduct.title || '',
+                    full_price: selectedProduct.full_price || '',
+                    price: selectedProduct.price || '',
+                    off: selectedProduct.off || '',
+                    cart: selectedProduct.cart || '',
+                    vendor_perma: selectedProduct.vendor_perma || '',
+                    vendor_title: selectedProduct.vendor_title || '',
+                    exam_code: selectedProduct.exam_code || '',
+                    exam_title: selectedProduct.exam_title || ''
+                };
+
+                cart.push(cartItem);
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Show success
+                showSnackbar(`✅ "${selectedProduct.title}" added to cart!`);
+            }
+
+            // Hook up the Buy Now buttons
+            if (buyPdfBtn) {
+                buyPdfBtn.addEventListener('click', () => addItemToCart(pdfPlan));
+            }
+            if (buyTeBtn) {
+                buyTeBtn.addEventListener('click', () => addItemToCart(tePlan));
+            }
+        });
+    </script>
+
+
 @endsection

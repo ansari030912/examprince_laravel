@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DownloadHistoryController;
@@ -21,6 +20,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SingleCertificationsExamsController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\UnlimitedAccessController;
 use App\Http\Controllers\VideoTrainingCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamProviderController;
@@ -49,7 +49,8 @@ Route::get('/exam-providers', [ExamProviderController::class, 'index']);
 Route::get('/exam-provider/{vendorPerma}', [ExamProviderController::class, 'getExamsByVendorPerma']);
 Route::get('/vendor-exam-questions/{vendor_perma}/{cert_perma}', [SingleCertificationsExamsController::class, 'getSingleCertificationExams']);
 Route::get('/test-engine-simulator', [HomeController::class, 'getBannerForTestEngine']);
-Route::get('/unlimited-access', [HomeController::class, 'getUnlimitedAccess']);
+Route::get('/unlimited-access', [UnlimitedAccessController::class, 'index'])->name('unlimited.access');
+
 
 Route::get('/exam-questions/{vendor_perma}/{exam_perma}', [ExamsPageController::class, 'show']);
 Route::get('/search', [SearchController::class, 'search'])->name('search');
@@ -60,7 +61,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/video-courses', [VideoTrainingCourseController::class, 'index'])->name('video-courses');
 ;
 Route::get('/training-course/{perma}', [VideoTrainingCourseController::class, 'show'])->name('training-course');
-// Route::post('/add-to-cart/{perma}', [\App\Http\Controllers\CartController::class, 'add'])->name('add-to-cart');
+
 Route::get('/faqs', [HomeController::class, 'getFaq']);
 Route::get('/about', [HomeController::class, 'getAbout']);
 Route::get('/refund-policy', [HomeController::class, 'getRefund']);
